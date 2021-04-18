@@ -8,6 +8,8 @@ import Home from '../home/Home';
 import Signup from '../auth/Signup';
 import Login from '../auth/Login';
 import PrivateRoute from '../auth/PrivateRoute';
+import Dashboard from '../dashboard/dashboard';
+
 
 export default function App() {
   return (
