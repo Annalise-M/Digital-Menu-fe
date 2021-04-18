@@ -1,8 +1,11 @@
 import React from 'react';
 import { render } from 'react-dom';
-import App from './components/app/app/App';
+import { BrowserRouter } from 'react-router-dom';
+import App from './components/app/App';
 
 render(
-  <App />,
+  <BrowserRouter>
+    <App />
+  </BrowserRouter>,
   document.getElementById('root')
 );
