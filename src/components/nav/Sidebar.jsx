@@ -21,24 +21,14 @@ export default class Sidebar extends Component {
           <Link to="/">Home</Link>
           <Link to="/Signup">Signup</Link>
           <Link to="/Login">Login</Link>
-          {/* <Link to="/Dashboard">Dashboard</Link> */}
         </nav>
 
         {/* CONTENT */}
         <div>
           <AuthProvider>
-            <Route exact path="/" component={Home}>
-              {/* { ({ match }) => <Home show={match!== null} /> } */}
-            </Route>
-              
-            <Route exact path="/signup" component={Signup}>
-              {/* { ({ match }) => <Signup show={match!== null} /> } */}
-            </Route>
-
-            <Route exact path="/login" component={Login}>
-              {/* { ({ match }) => <Signup show={match!== null} /> } */}
-            </Route>
-
+            <Route exact path="/" component={Home} />
+            <Route exact path="/signup" component={Signup} />
+            <Route exact path="/login" component={Login} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </AuthProvider>
         </div>
