@@ -3,7 +3,7 @@ import {
   BrowserRouter as Router,
   Route
 } from 'react-router-dom';
-import { CSSTransition } from 'react-transition-group';
+import { CSSTransition, SwitchTransition } from 'react-transition-group';
 import Signup from '../auth/Signup';
 import Login from '../auth/Login';
 import AuthProvider from '../auth/AuthProvider';
@@ -11,7 +11,7 @@ import PrivateRoute from '../auth/PrivateRoute';
 import Dashboard from '../dashboard/dashboard';
 
 const routes = [
-  <>
+  <SwitchTransition>
     <AuthProvider>
       <Router>
         <Route exact path="/" component={Home} />
@@ -20,11 +20,11 @@ const routes = [
         <PrivateRoute exact path="/dashboard" component={Dashboard} />
       </Router>
     </AuthProvider>
-  </>
+  </SwitchTransition>
 ]
 
 export default function Home() {
-
+  
   return (
   <>
       <Route key={routes} exact path={routes}>
@@ -44,9 +44,9 @@ export default function Home() {
       
       <div classNames="Home">
         <header>
-          <h1 className="Restaurant-title">
+          <title>
             Restaurant Name Here
-          </h1>
+          </title>
         </header>
         <body>
           <h1>
