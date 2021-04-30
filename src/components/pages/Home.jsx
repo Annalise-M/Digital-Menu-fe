@@ -8,7 +8,7 @@ import Signup from '../auth/Signup';
 import Login from '../auth/Login';
 import AuthProvider from '../auth/AuthProvider';
 import PrivateRoute from '../auth/PrivateRoute';
-import Dashboard from '../dashboard/dashboard';
+import Dashboard from './Dashboard';
 
 const routes = [
   <SwitchTransition>
