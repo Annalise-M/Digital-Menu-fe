@@ -8,12 +8,12 @@ import { IoBeerOutline } from "react-icons/io5";
 const Header = props => {
   const {menuState, setMenuState} = props;
     return (
-    < div className="site-header">
+    <div className="site-header">
       <header>
         <div className="brand-icon">
           <Link to="/">
             <div className="icon">
-              <i className="ion icon-react">
+              <i className="io beer-icon">
                 <IoBeerOutline />
               </i>
             </div>
