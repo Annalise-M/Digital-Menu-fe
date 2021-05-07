@@ -1,11 +1,22 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { 
+  
+  Route, 
+  Switch,  
+  Link
+} from 'react-router-dom';
+import Home from '../pages/Home';
+import Signup from '../auth/Signup';
+import AuthProvider from '../auth/AuthProvider';
+import Login from '../auth/Login';
+import Dashboard from '../pages/Dashboard';
+import PrivateRoute from '../auth/PrivateRoute';
 
 const NavContent = () => (
-  <div>
-    <nav className="sidebarNav">
+  <div className="">
+    <nav className="sidebarNavOverlay">
       <div className="sidebar-top">
-        <div className="link-wrapper">
+        <div className="links-wrapper">
           <Link to="/">Home</Link>
           <Link to="/Signup">Signup</Link>
           <Link to="/Login">Login</Link>
@@ -13,6 +24,17 @@ const NavContent = () => (
       </div>
       <div className="sidebar-bottom"></div>
     </nav>
+    
+     <Switch>
+          <AuthProvider>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/signup" component={Signup} />
+            <Route exact path="/login" component={Login} />
+            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          </AuthProvider>
+      </Switch>
+   
+    
   </div>
 );
 
