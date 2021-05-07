@@ -1,9 +1,8 @@
 import React from 'react';
 import { 
-  
   Route, 
   Switch,  
-  Link
+  Link,
 } from 'react-router-dom';
 import Home from '../pages/Home';
 import Signup from '../auth/Signup';
@@ -20,19 +19,21 @@ const NavContent = () => (
           <Link to="/">Home</Link>
           <Link to="/Signup">Signup</Link>
           <Link to="/Login">Login</Link>
-        </div>
-      </div>
-      <div className="sidebar-bottom"></div>
-    </nav>
-    
-     <Switch>
+        <Switch>
           <AuthProvider>
             <Route exact path="/" component={Home} />
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/login" component={Login} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </AuthProvider>
-      </Switch>
+        </Switch>
+          
+        </div>
+      </div>
+      <div className="sidebar-bottom"></div>
+    </nav>
+    
+     
    
     
   </div>
