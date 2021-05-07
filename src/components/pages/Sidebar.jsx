@@ -1,6 +1,6 @@
-import React, { useRef, useEffect } from 'react';
-import { Route, Link, withRouter } from 'react-router-dom';
-import { gsap } from 'gsap';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import gsap, { Power3 } from 'gsap/gsap-core';
 // import AuthProvider from '../auth/AuthProvider';
 // import Dashboard from './Dashboard';
 // import Home from './Home';
@@ -8,61 +8,104 @@ import { gsap } from 'gsap';
 // import PrivateRoute from '../auth/PrivateRoute';
 // import Login from '../auth/Login';
 
+gsap.registerPlugin(CSSPlugin);
 
-const Sidebar = props => {
-  const sidebarMenu = useRef(null);
-  const sidebarMenuOverlay = useRef(null);
-  const menuLayer = useRef(null);
-  const menuTimeline = useRef();
-
+function Sidebar(props) {
   const { menuState, setMenuState } = props;
 
+  const sidebarNav = React.createRef();
+  const sidebarNavOverlay = React.createRef();
+  const menuLayer = React.createRef();
+  const menuTimeline = React.createRef();
+
   useEffect(() => {
-    menuTimeline.current = gsap.timeline({ paused: true });
-    menuTimeline.current.fromTo(
-      [sidebarMenuOverlay, menuLayer, sidebarMenu],
-      {
-        duration: 0,
-        x: '100%'
-      },
-      {
-        duration: 0.75,
-        x: '0%',
-        ease: 'power3.inOut',
-        stagger: {
-          amount: 0.5
-        }
+    gsap.timeline('.menuTimeline', {
+      paused: true
+    });
+
+    gsap.fromTo('.menuTimeline, .sidebarNavOverlay, .menuLayer, .sidebarNav', {
+      duration: 0,
+      x: '100%'
+    }, {
+      duration: 0.75,
+      x: '0%',
+      ease: Power3.inOut,
+      stagger: {
+        amount: 0.5
       }
-    );
+    });
+
   }, []);
 
-  useEffect(() => {
-    menuState ? menuTimeline.current.play() : menuTimeline.current.reverse();
-  }, [menuState]);
 
-  useEffect(() => {
-    const { history } = props;
-    history.listen(() => setMenuState(false));
-  });
+  // gsap.registerPlugin(CSSPlugin);
+  // useEffect(() => {
+  //   gsap.timeline('.menuTimelime', {
+  //     paused: true
+  //   }),
+  //   gsap.fromTo('.sidebarMenuOverlay', '.menuLayer', '.sidebarMenu'(
+      
+  //     {
+  //       duration: 0,
+  //       x: '100%'
+  //     },
+  //     {
+  //       duration: 0.75,
+  //       x: '0%',
+  //       ease: Power3.inOut,
+  //       stagger: {
+  //         amount: 0.5
+  //       }
+  //     }
+  //   ));
+  // }, []);
+    
+    // gsap.timeline({ paused: true });
+    // gsap.fromTo('.menuTimeline'(
+    //   [ 'sidebarMenuOverlay', 'menuLayer', 'sidebarMenu'],
+    //   {
+    //     duration: 0,
+    //     x: '100%'
+    //   },
+    //   {
+    //     duration: 0.75,
+    //     x: '0%',
+    //     ease: Power3.inOut,
+    //     stagger: {
+    //       amount: 0.5
+    //     }
+    //   }
+    // ));
+  //}, []);
 
+  // useEffect(() => {
+  //   menuState ? menuTimeline.play() : menuTimeline.reverse();
+  // }, [menuState]);
+
+  // useEffect(() => {
+  //   const { history } = props;
+  //   history.listen(() => setMenuState(false));
+  // });
+  
   return (
-  <>
-    <div className="sidebarNavOverlay"
-      ref={sidebarMenuOverlay}
-      onClick={() => setMenuState(false)}></div>
-        <div className="menu-wrapper">
-          <div className="menu-layer" ref={menuLayer}></div>
- 
-          <nav className="sidebarNav" ref={sidebarMenu}>
-            <div className="sidebar-top">
-              <div className="link-wrapper">
-                <Link to="/">Home</Link>
-                <Link to="/Signup">Signup</Link>
-                <Link to="/Login">Login</Link>
+    <>
+      <div className="menuTimeline" ref={menuTimeline}>
+        <div className="sidebarNavOverlay"
+          ref={sidebarNavOverlay}
+          onClick={() => setMenuState(true)}></div>
+          <div className="menu-wrapper">
+            <div className="menu-layer" ref={menuLayer}></div>
+  
+            <nav className="sidebarNav" ref={sidebarNav}>
+              <div className="sidebar-top">
+                <div className="link-wrapper">
+                  <Link to="/">Home</Link>
+                  <Link to="/Signup">Signup</Link>
+                  <Link to="/Login">Login</Link>
+                </div>
               </div>
-            </div>
-            <div className="sidebar-bottom"></div>
-          </nav>
+              <div className="sidebar-bottom"></div>
+            </nav>
 
           {/* CONTENT */}
           {/* <div>
@@ -75,8 +118,9 @@ const Sidebar = props => {
           </div> */}
         </div>
         
-    </>
+    </div>
+  </>
   )
 };
 
-export default withRouter(Sidebar);
+export default Sidebar;

@@ -7,7 +7,7 @@ import AuthProvider from '../auth/AuthProvider';
 import Login from '../auth/Login';
 import Dashboard from '../pages/Dashboard';
 import PrivateRoute from '../auth/PrivateRoute';
-import Sidebar from '../pages/Sidebar';
+
 import Header from '../pages/Header';
 
 import './style.scss';
@@ -17,9 +17,11 @@ const App3 = () => {
 
   return (
     <BrowserRouter>
-      <div className="App container">
+      <div className="app container">
+        {/* holding burgerMenu animation state here */}
         <Header menuState={menuState} setMenuState={setMenuState} />
-        <Sidebar menuState={menuState} setMenuState={setMenuState} />
+        
+   
         <Switch>
           <AuthProvider>
             <Route exact path="/" component={Home} />
