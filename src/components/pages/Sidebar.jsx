@@ -1,12 +1,6 @@
 import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import gsap, { Power3 } from 'gsap/gsap-core';
-// import AuthProvider from '../auth/AuthProvider';
-// import Dashboard from './Dashboard';
-// import Home from './Home';
-// import Signup from '../auth/Signup';
-// import PrivateRoute from '../auth/PrivateRoute';
-// import Login from '../auth/Login';
 
 gsap.registerPlugin(CSSPlugin);
 

@@ -32,10 +32,6 @@ const NavContent = () => (
       </div>
       <div className="sidebar-bottom"></div>
     </nav>
-    
-     
-   
-    
   </div>
 );
 
