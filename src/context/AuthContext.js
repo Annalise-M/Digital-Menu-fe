@@ -14,6 +14,12 @@ export const useLogin = () => {
   return login;
 };
 
+// Admin Logout
+export const useLogout = () => {
+  const { logout } = useContext(AuthContext);
+  return logout;
+}
+
 // Current Admin
 export const useCurrentAdmin = () => {
   const { currentAdmin } = useContext(AuthContext);

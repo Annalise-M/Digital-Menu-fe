@@ -11,8 +11,8 @@ const PrivateRoute = props => {
   // history.push as res to submits or admin interaction
   // Redirects in res to page load
 
-  // If not logged in, redirects to login
-  if(!currentAdmin) return <Redirect to="/login" />;
+  // If not logged in, redirects to home
+  if(!currentAdmin) return <Redirect to="/" />;
 
   // if admin is logged in
   return <Route {...props} />;

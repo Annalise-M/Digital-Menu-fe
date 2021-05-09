@@ -1,9 +1,142 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`App component renders App 1`] = `
+exports[`App3 component renders App3 1`] = `
 <DocumentFragment>
-  <h1>
-    Public area / Home
-  </h1>
+  <div
+    class="app container"
+  >
+    <div
+      class="site-header"
+    >
+      <header>
+        <div
+          class="brand-icon"
+        >
+          <a
+            href="/"
+          >
+            <div
+              class="icon"
+            >
+              <i
+                class="io beer-icon"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M352 200v240a40.12 40.12 0 01-40 40H136a40.12 40.12 0 01-40-40V224"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="32"
+                  />
+                  <path
+                    d="M352 224h40a56.16 56.16 0 0156 56v80a56.16 56.16 0 01-56 56h-40"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-miterlimit="10"
+                    stroke-width="32"
+                  />
+                  <path
+                    d="M224 256v160m64-160v160M160 256v160m160-304a48 48 0 010 96c-13.25 0-29.31-7.31-38-16H160c-8 22-27 32-48 32a48 48 0 010-96 47.91 47.91 0 0126 9"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="32"
+                  />
+                  <path
+                    d="M91.86 132.43a40 40 0 1160.46-52S160 91 160 96m-14.17-31.29C163.22 44.89 187.57 32 216 32c52.38 0 94 42.84 94 95.21a95 95 0 01-1.67 17.79"
+                    fill="none"
+                    stroke-linecap="round"
+                    stroke-miterlimit="10"
+                    stroke-width="32"
+                  />
+                </svg>
+              </i>
+            </div>
+            <span>
+              The Traveling Taphouse
+            </span>
+          </a>
+        </div>
+        <div>
+          <div>
+            <div
+              class="sidebar-top"
+              style="right: -100%; position: fixed;"
+            >
+              <div>
+                <div
+                  class=""
+                >
+                  <nav
+                    class="sidebarNavOverlay"
+                  >
+                    <div
+                      class="sidebar-top"
+                    >
+                      <div
+                        class="links-wrapper"
+                      >
+                        <a
+                          href="/"
+                        >
+                          Home
+                        </a>
+                        <a
+                          href="/Signup"
+                        >
+                          Signup
+                        </a>
+                        <a
+                          href="/Login"
+                        >
+                          Login
+                        </a>
+                        <div
+                          class="home"
+                        >
+                          <header>
+                            <title>
+                              Restaurant Name Here
+                            </title>
+                          </header>
+                          <div>
+                            <h1>
+                              This is the public visable menu.
+                            </h1>
+                          </div>
+                        </div>
+                        <h1>
+                          Loading...
+                        </h1>
+                      </div>
+                    </div>
+                    <div
+                      class="sidebar-bottom"
+                    />
+                  </nav>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button
+            class="menu-trigger "
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
+      </header>
+    </div>
+  </div>
 </DocumentFragment>
 `;

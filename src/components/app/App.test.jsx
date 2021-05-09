@@ -1,15 +1,17 @@
 import React from 'react';
 import { render, cleanup } from '@testing-library/react';
-import App from './App';
-import { BrowserRouter } from 'react-router-dom';
+import App3 from './App3';
+// import { BrowserRouter } from 'react-router-dom';
 
-describe('App component', () => {
+
+describe('App3 component', () => {
   afterEach(() => cleanup());
-  it('renders App', () => {
+  it('renders App3', () => {
     const { asFragment } = render(
-    <BrowserRouter>
-    <App />
-    </BrowserRouter>);
+
+      <App3 />
+
+    );
     expect(asFragment()).toMatchSnapshot();
   });
 });
