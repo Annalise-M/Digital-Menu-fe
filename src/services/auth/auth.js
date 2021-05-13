@@ -11,3 +11,5 @@ export const postLogin = (email, password) =>
 // get => Verify {double check pathing}
 export const getVerify = () => 
   get('/api/v1/auth/verify');
+
+  
