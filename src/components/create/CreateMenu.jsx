@@ -57,7 +57,7 @@ const CreateMenu = () => {
         onChange={handleChange} 
       />
 
-      {/* radio button for strikethrough option for updateMenu ? */}
+      {/* radio button for strikethrough option for updateMenu ? on menuList ?*/}
 
       <button>Add Menu Item</button>
     </form>
