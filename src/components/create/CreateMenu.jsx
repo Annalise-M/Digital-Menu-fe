@@ -3,16 +3,17 @@ import { useDispatch } from 'react-redux';
 import { createMenu } from '../../actions/menuActions';
 
 const CreateMenu = () => {
-  // const [admin_id, setAdmin_id] = useState('');
   const [item, setItem] = useState('');
   const [detail, setDetail] = useState('');
   const [price, setPrice] = useState('');
+  // const [lineItem, setLineItem] = onChange(''); ???
   const dispatch = useDispatch();
 
   const handleChange = ({ target }) => {
     if(target.name === 'item') setItem(target.value);
     if(target.name === 'detail') setDetail(target.value);
     if(target.name === 'price') setPrice(target.value);
+    // if(target.id === 'lineItem') createContext(target.value);
   };
   
   const handleSubmit = e => {
@@ -22,7 +23,6 @@ const CreateMenu = () => {
       detail,
       price
     }));
-    // setAdmin_id('');
     setItem('');
     setDetail('');
     setPrice('');
@@ -51,12 +51,14 @@ const CreateMenu = () => {
       <label htmlFor="menu-price">Price</label>
       <input 
         id="menu-price"
-        type="number" 
+        type="text" 
         name="price" 
         value={price} 
         onChange={handleChange} 
       />
-      
+
+      {/* radio button for strikethrough option for updateMenu ? */}
+
       <button>Add Menu Item</button>
     </form>
   );

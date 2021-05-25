@@ -3,6 +3,7 @@ import { Provider } from 'react-redux';
 import store from '../../store';
 import CreateMenu from '../create/CreateMenu';
 import MenuList from '../list/MenuList';
+import AuthProvider from '../auth/AuthProvider';
 // import createBeerCard
 // import beerList
 
@@ -25,8 +26,11 @@ export default function Dashboard() {
 
   return (
     <Provider store={store}>
+       <AuthProvider>
+
       <CreateMenu />
       <MenuList />
+       </AuthProvider>
       {/* 
       <CreateBeer />
       <BeerList />

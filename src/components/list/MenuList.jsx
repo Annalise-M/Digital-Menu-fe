@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchMenus, removeMenu } from '../../actions/menuActions';
 import { selectMenus } from '../../selectors/menuSelectors';
 
+
 const MenuList = () => {
   const menus = useSelector(selectMenus);
   const dispatch = useDispatch();
@@ -16,10 +17,12 @@ const MenuList = () => {
   };
 
   const menuElements = menus.map(menu => (
-    <li key={menu.id}>
-      <p>{menu.item}</p>
-      <button value={menu.id} onClick={handleDelete}>🗑️</button>
-    </li>
+      <li key={menu.id}>
+        <p>{menu.item}</p>
+        <p>{menu.detail}</p>
+        <p>{menu.price}</p>
+        <button value={menu.id} onClick={handleDelete}>🗑️</button>
+      </li>
   ));
 
   return (

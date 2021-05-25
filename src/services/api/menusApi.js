@@ -1,9 +1,7 @@
 // const fetch = require('node-fetch');
-
 import fetch from 'node-fetch';
 
-
-export const postMenu = async( menu) => {
+export const postMenu = async(menu) => {
   // const token = useAuthLoading('TOKEN');
   const res = await fetch(`${process.env.API_URL}/api/v1/menus`, {
     method: 'POST',
@@ -27,6 +25,8 @@ export const getMenus = async() => {
 
   return json;
 };
+
+// updateMenu here ? 
 
 export const deleteMenu = async(id) => {
   const res = await fetch(`${process.env.API_URL}/api/v1/menus/${id}`, {

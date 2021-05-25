@@ -1,8 +1,6 @@
 import { DELETE_MENU, PREPEND_MENU, SET_MENUS } from '../actions/menuActions';
-// import { useCurrentAdmin } from '../context/AuthContext';
 
 const initialState = {
-  // admin_id: useCurrentAdmin,
   list: []
 };
 
