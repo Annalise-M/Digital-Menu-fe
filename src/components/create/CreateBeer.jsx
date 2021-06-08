@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createBeer } from '../../actions/beerActions';
 
+
+// Should I place the reference in the element that's being corrected ? 
 const CreateBeer = () => {
   const [brewery, setBrewery] = useState('');
   const [style, setStyle] = useState('');

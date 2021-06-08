@@ -14,7 +14,7 @@ const BeerList = () => {
   }, []);
 
   // useEffect(() => {
-  //   Draggable.create('.menuCard', {
+  //   Draggable.create('.beerCard', {
   //     bounds: container,
   //     type: 'x, y'
   //   });

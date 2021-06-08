@@ -1,9 +1,9 @@
 import React from 'react';
-import CreateMenu from '../create/CreateMenu';
-import CreateBeer from '../create/CreateBeer';
-import styles from './createForms.scss';
+import CreateMenu from './CreateMenu';
+import CreateBeer from './CreateBeer';
+import styles from './allForms.scss';
 
-export default function CreateForms() {
+export default function AllForms() {
   return (
     <section>
       <div className="container" style={styles}>
@@ -18,4 +18,4 @@ export default function CreateForms() {
       </div>
     </section>
   )
-}
+};

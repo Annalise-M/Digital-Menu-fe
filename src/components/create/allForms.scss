@@ -1,0 +1,41 @@
+// body {
+//   color: rgba(240, 248, 255, 0.815)
+// }
+
+p {
+  margin-bottom: 1em;
+}
+
+// parent container to Menu & Beer forms
+form {
+  flex-direction: row;
+  // display: inline flow-root list-it;
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.container--narrow {
+  max-width: 34rem;
+}
+
+.form-split {
+  display: flex;
+  flex-direction: column;
+  font-weight: 400;
+  line-height: .8;
+  max-height: 108px;
+}
+
+// @media (min-width: 40em) {
+//   .form-split {
+//     flex-direction: row;
+//   }
+
+//   .form-split > * {
+//     flex-basis: 100%;
+//   }
+
+//   .form-split > * + * {
+//     margin-left: 2em;
+//   }
+// }
