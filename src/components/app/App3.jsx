@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+import Dashboard from '../pages/Dashboard';
 import Header from '../pages/Header';
+import Home from '../pages/Home';
+import PrivateRoute from '../auth/PrivateRoute';
+import AuthProvider from '../auth/AuthProvider';
 
 const App3 = () => {
   const [menuState, setMenuState] = useState(false);
   return (
     <div className="app container">
-      <BrowserRouter>
+      <Router>
         <Header menuState={menuState} setMenuState={setMenuState} />
-      </BrowserRouter>
+        <AuthProvider>
+          <Home />
+          <PrivateRoute exact path="/dashboard" component={Dashboard} />
+        </AuthProvider>
+      </Router>
     </div>
   );
 };

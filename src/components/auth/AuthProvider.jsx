@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
-import { getVerify, postLogin, postSignup } from '../../services/auth';
+import { getVerify, postLogin, postSignup } from '../../services/auth/auth';
 
 const AuthProvider = ({ children }) => {
   const [currentAdmin, setCurrentAdmin] = useState(null);
