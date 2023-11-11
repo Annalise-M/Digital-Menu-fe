@@ -1,5 +1,6 @@
 const request = async(path, method, body) => {
-  const res = await fetch(`${process.env.API_URL}${path}`, {
+  const url = process.env.API_URL || 'html://localhost:7891';
+  const res = await fetch(`${url}${path}`, {
     method,
     headers: ['POST', 'PUT', 'PATCH'].includes(method)
     ? { 'Content-Type': 'application/json' }
@@ -13,7 +14,7 @@ const request = async(path, method, body) => {
   const json = await res.json();
 
   if(!res.ok) throw json;
-  return json;
+  return json & res;
 };
 
 export const post = (path, body) => request(path, 'POST', body);
