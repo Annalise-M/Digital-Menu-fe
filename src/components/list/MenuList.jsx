@@ -3,8 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchMenus, removeMenu } from '../../actions/menuActions';
 import { selectMenus } from '../../selectors/menuSelectors';
 // import { gsap } from 'gsap';
-// import { Draggable } from 'gsap/Draggable';
-// import styles from './menuList.scss';
+import { Draggable } from 'gsap/Draggable';
+import styles from './menuList.scss';
 
 // gsap.registerPlugin(CSSPlugin);
 // gsap.registerPlugin(Draggable);
@@ -59,7 +59,7 @@ const MenuList = () => {
             <p>{menu.price}</p>
             <button value={menu.id} onClick={handleDelete}>🗑️</button>
           </div>
-          )})};
+          )})}
 {/*         
       {console.log(menu.id, menu.ref, 'balifnlisenlsien')} */}
       </div>
