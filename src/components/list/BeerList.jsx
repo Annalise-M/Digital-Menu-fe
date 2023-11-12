@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBeers, removeBeer } from '../../actions/beerActions';
 import { selectBeers } from '../../selectors/beerSelectors';
+import { Draggable } from "gsap/all";
 
 const BeerList = () => {
   const beers = useSelector(selectBeers);
@@ -13,19 +14,21 @@ const BeerList = () => {
     dispatch(fetchBeers());
   }, []);
 
-  // useEffect(() => {
-  //   Draggable.create('.beerCard', {
-  //     bounds: container,
-  //     type: 'x, y'
-  //   });
-  // }, [])
+  useEffect(() => {
+    Draggable.create('.draggable', {
+      type: "x, y",
+      onPress: function() {
+        console.log("clicked");
+      }
+    });
+  }, [])
 
   const handleDelete = ({ target }) => {
     dispatch(removeBeer(target.value));
   };
 
   const beerElements = beers.map(beer => (
-      <li key={beer.id} ref={beerCard} id="beerCard">
+      <li key={beer.id} ref={beerCard} id="beerCard" className='draggable'>
         <p>{beer.brewery}</p>
         <p>{beer.style}</p>
         <p>{beer.abv}</p>
@@ -35,7 +38,7 @@ const BeerList = () => {
   ));
 
   return (
-    <ul data-testid="beers">
+    <ul data-testid="beers" className='draggable'>
       {beerElements}
     </ul>
   );
