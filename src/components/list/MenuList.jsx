@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMenus, removeMenu } from '../../actions/menuActions';
 import { selectMenus } from '../../selectors/menuSelectors';
-import { gsap } from 'gsap';
+// import { gsap } from 'gsap';
 // import { Draggable } from 'gsap/Draggable';
-import styles from './menuList.scss';
+// import styles from './menuList.scss';
 
-gsap.registerPlugin(CSSPlugin);
-gsap.registerPlugin(Draggable);
+// gsap.registerPlugin(CSSPlugin);
+// gsap.registerPlugin(Draggable);
 
 
 const MenuList = () => {
