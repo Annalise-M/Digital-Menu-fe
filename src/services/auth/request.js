@@ -1,6 +1,7 @@
+import fetch from 'node-fetch';
+
 const request = async(path, method, body) => {
-  const url = process.env.API_URL || 'html://localhost:7891';
-  const res = await fetch(`${url}${path}`, {
+  const res = await fetch(`${process.env.API_URL}${path}`, {
     method,
     headers: ['POST', 'PUT', 'PATCH'].includes(method)
     ? { 'Content-Type': 'application/json' }
@@ -14,7 +15,7 @@ const request = async(path, method, body) => {
   const json = await res.json();
 
   if(!res.ok) throw json;
-  return json & res;
+  return json;
 };
 
 export const post = (path, body) => request(path, 'POST', body);
