@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchMenus, removeMenu } from '../../actions/menuActions';
 import { selectMenus } from '../../selectors/menuSelectors';
 import { gsap } from 'gsap';
-import { Draggable } from 'gsap/Draggable';
+// import { Draggable } from 'gsap/Draggable';
 import styles from './menuList.scss';
 
 gsap.registerPlugin(CSSPlugin);
