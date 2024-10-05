@@ -1,5 +1,7 @@
 import React from 'react';
 
+// All Menu Content should be seen here
+// All Time - Public View
 export default function Home() {
   
   return (
