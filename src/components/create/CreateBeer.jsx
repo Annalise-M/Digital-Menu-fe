@@ -4,6 +4,9 @@ import { createBeer } from '../../actions/beerActions';
 
 
 // Should I place the reference in the element that's being corrected ? 
+
+// Look into injecting the GSAP plugin's (look at MenuList.jsx & BeerList.jsx) here to get the rendering per card => check on the placement of the container element and see how & where that lands)
+
 const CreateBeer = () => {
   const [brewery, setBrewery] = useState('');
   const [style, setStyle] = useState('');
