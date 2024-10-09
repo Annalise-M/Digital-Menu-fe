@@ -2,12 +2,12 @@ import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchMenus, removeMenu } from '../../actions/menuActions';
 import { selectMenus } from '../../selectors/menuSelectors';
-// import { gsap } from 'gsap';
-import { Draggable } from "gsap/all";
-// import styles from './menuList.scss';
+import gsap from "gsap";
+// import { CSSPlugin } from 'gsap/CSSPlugin';
+// import { Draggable } from "gsap/Draggable";
+// gsap.registerPlugin(CSSPlugin, Draggable);
 
-gsap.registerPlugin(CSSPlugin);
-gsap.registerPlugin(Draggable);
+
 
 const MenuList = () => {
   const menus = useSelector(selectMenus);
@@ -20,15 +20,15 @@ const MenuList = () => {
     dispatch(fetchMenus());
   }, []);
 
-  // animated effect
-  useEffect(() => {
-    Draggable.create('.draggable', {
-      type: "x, y",
-      onPress: function() {
-        console.log("clicked");
-      }
-    });
-  }, [])
+  // // animated effect
+  // useEffect(() => {
+  //   Draggable.create('.draggable', {
+  //     type: "x, y",
+  //     onPress: function() {
+  //       console.log("clicked");
+  //     }
+  //   });
+  // }, [])
 
   const handleDelete = ({ target }) => {
     dispatch(removeMenu(target.value));

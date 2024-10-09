@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBeers, removeBeer } from '../../actions/beerActions';
 import { selectBeers } from '../../selectors/beerSelectors';
-import { Draggable } from "gsap/all";
+// import { Draggable } from "gsap";
 
 const BeerList = () => {
   const beers = useSelector(selectBeers);
