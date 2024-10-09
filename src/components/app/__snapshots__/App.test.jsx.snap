@@ -137,6 +137,23 @@ exports[`App3 component renders App3 1`] = `
         </div>
       </header>
     </div>
+    <div
+      class="home"
+    >
+      <header>
+        <title>
+          Restaurant Name Here
+        </title>
+      </header>
+      <div>
+        <h1>
+          This is the public visable menu.
+        </h1>
+      </div>
+    </div>
+    <h1>
+      Loading...
+    </h1>
   </div>
 </DocumentFragment>
 `;

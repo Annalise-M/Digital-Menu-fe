@@ -7,11 +7,12 @@ const PrivateRoute = props => {
   const loading = useAuthLoading();
   if(loading) return <h1>Loading...</h1>;
 
-  // Links to response link
-  // history.push as res to submits or admin interaction
-  // Redirects in res to page load
+  // 1. Link -> in response to a click
+  // 2. history.push -> in response to submits or user interaction
+  // 3. Redirect -> in response to page load
 
-  // If not logged in, redirects to home
+  // if not logged in
+  // redirect to login page
   if(!currentAdmin) return <Redirect to="/" />;
 
   // if admin is logged in
