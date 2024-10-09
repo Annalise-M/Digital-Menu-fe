@@ -53,7 +53,12 @@
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^8.1.1",
     "css-loader": "^5.2.2",
+<<<<<<< HEAD
     "dotenv": "^8.6.0",
+=======
+    "dotenv": "^8.2.0",
+    "dotenv-webpack": "^8.0.1",
+>>>>>>> Main
     "eslint": "^7.24.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^8.2.0",
@@ -62,15 +67,25 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.3.1",
     "identity-obj-proxy": "^3.0.0",
+<<<<<<< HEAD
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",
     "node-fetch": "^2.6.1",
+=======
+    "jest": "^26.6.3",
+    "node-fetch": "^2.7.0",
+>>>>>>> Main
     "postcss-import": "^14.0.1",
     "postcss-loader": "^5.2.0",
     "postcss-nested": "^5.0.5",
     "prettier": "^2.2.1",
     "prop-types": "^15.7.2",
+<<<<<<< HEAD
     "sass": "^1.69.5",
+=======
+    "react-error-overlay": "6.0.9",
+    "sass": "^1.32.12",
+>>>>>>> Main
     "sass-loader": "^11.0.1",
     "style-loader": "^2.0.0",
     "url-loader": "^4.1.1",
