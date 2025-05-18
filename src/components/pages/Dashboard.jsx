@@ -11,7 +11,6 @@ export default function Dashboard() {
   return (
     <Provider store={store}>
       <AuthProvider>
-        {/* soon to be <AllLists /> */}
         <CombinedForm />
         <MenuList />
         <BeerList />

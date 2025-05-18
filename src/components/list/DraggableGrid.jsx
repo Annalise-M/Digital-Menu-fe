@@ -47,10 +47,10 @@ const DraggableGrid = ({ children, className = '' }) => {
             }
           },
           onDragStart: () => {
-            gsap.to(card, { scale: 1.05, duration: 0.2 });
+            gsap.to(card, { scale: 1, duration: 0.1 });
           },
           onDragEnd: () => {
-            gsap.to(card, { scale: 1, duration: 0.2 });
+            gsap.to(card, { scale: 1, duration: 0.1 });
           },
           radius: 15,
         })[0]; // Draggable.create returns an array, we want the first instance
