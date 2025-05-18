@@ -4,7 +4,7 @@ import store from '../../store';
 import MenuList from '../list/MenuList';
 import AuthProvider from '../auth/AuthProvider';
 import BeerList from '../list/BeerList';
-import AllForms from '../form-creation/AllForms';
+import CombinedForm from '../form-creation/CombinedForm';
 
 // This is where I'm gonna want to set the react-redux state for the store, because only admin access will be able to CRUD the menu's & beer's api { instead of App.js like in the example }
 export default function Dashboard() {
@@ -12,7 +12,7 @@ export default function Dashboard() {
     <Provider store={store}>
       <AuthProvider>
         {/* soon to be <AllLists /> */}
-        <AllForms />
+        <CombinedForm />
         <MenuList />
         <BeerList />
       </AuthProvider>

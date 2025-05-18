@@ -1,0 +1,41 @@
+.form-field {
+  margin-bottom: 1rem;
+  
+  label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: whitesmoke;
+    font-weight: 500;
+  }
+
+  input {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: whitesmoke;
+    transition: all 0.2s ease;
+
+    &:focus {
+      outline: none;
+      border-color: rgba(255, 255, 255, 0.4);
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    &.error {
+      border-color: #ff4444;
+    }
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+  }
+
+  .error-message {
+    display: block;
+    margin-top: 0.25rem;
+    color: #ff4444;
+    font-size: 0.875rem;
+  }
+} 

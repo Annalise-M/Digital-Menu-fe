@@ -1,67 +1,144 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { createMenu } from '../../actions/menuActions';
+import FormField from './FormField';
+import './createMenu.scss';
 
 const CreateMenu = () => {
-  const [item, setItem] = useState('');
-  const [detail, setDetail] = useState('');
-  const [price, setPrice] = useState('');
-  // const [lineItem, setLineItem] = onChange(''); ???
+  const [formData, setFormData] = useState({
+    item: '',
+    detail: '',
+    price: ''
+  });
+
+  const [errors, setErrors] = useState({});
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+
   const dispatch = useDispatch();
 
+  const validateForm = () => {
+    const newErrors = {};
+    
+    if (!formData.item.trim()) {
+      newErrors.item = 'Item name is required';
+    }
+    
+    if (!formData.detail.trim()) {
+      newErrors.detail = 'Item description is required';
+    }
+    
+    if (!formData.price) {
+      newErrors.price = 'Price is required';
+    } else if (isNaN(formData.price) || parseFloat(formData.price) <= 0) {
+      newErrors.price = 'Price must be a positive number';
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
   const handleChange = ({ target }) => {
-    if(target.name === 'item') setItem(target.value);
-    if(target.name === 'detail') setDetail(target.value);
-    if(target.name === 'price') setPrice(target.value);
-    // if(target.id === 'lineItem') createContext(target.value);
-  };
-  
-  const handleSubmit = e => {
-    e.preventDefault();
-    dispatch(createMenu({
-      item,
-      detail,
-      price
+    const { name, value } = target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
     }));
-    setItem('');
-    setDetail('');
-    setPrice('');
+    // Clear error when user starts typing
+    if (errors[name]) {
+      setErrors(prev => ({
+        ...prev,
+        [name]: ''
+      }));
+    }
   };
-  
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    
+    if (!validateForm()) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setSubmitSuccess(false);
+
+    try {
+      await dispatch(createMenu({
+        ...formData,
+        price: parseFloat(formData.price)
+      }));
+      
+      setFormData({
+        item: '',
+        detail: '',
+        price: ''
+      });
+      setSubmitSuccess(true);
+    } catch (error) {
+      setErrors({
+        submit: 'Failed to add menu item. Please try again.'
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
-    <form onSubmit={handleSubmit}>
-      <label htmlFor="menu-item">Item</label>
-      <input 
+    <form onSubmit={handleSubmit} className="create-menu-form">
+      <h2>Add Menu Item</h2>
+      
+      <FormField
         id="menu-item"
-        type="text" 
-        name="item" 
-        value={item} 
-        onChange={handleChange} 
+        label="Item Name"
+        name="item"
+        value={formData.item}
+        onChange={handleChange}
+        error={errors.item}
+        required
+        placeholder="Enter item name"
       />
 
-      <label htmlFor="menu-detail">Detail</label>
-      <input 
+      <FormField
         id="menu-detail"
-        type="text" 
-        name="detail" 
-        value={detail} 
-        onChange={handleChange} 
+        label="Description"
+        name="detail"
+        value={formData.detail}
+        onChange={handleChange}
+        error={errors.detail}
+        required
+        placeholder="Enter item description"
       />
 
-      <label htmlFor="menu-price">Price</label>
-      <input 
+      <FormField
         id="menu-price"
-        type="text" 
-        name="price" 
-        value={price} 
-        onChange={handleChange} 
+        label="Price ($)"
+        name="price"
+        type="number"
+        value={formData.price}
+        onChange={handleChange}
+        error={errors.price}
+        required
+        placeholder="Enter price"
       />
 
-      {/* radio button for strikethrough option for updateMenu ? on menuList ?*/}
+      {errors.submit && (
+        <div className="error-message">{errors.submit}</div>
+      )}
 
-      <button>Add Menu Item</button>
+      {submitSuccess && (
+        <div className="success-message">Menu item added successfully!</div>
+      )}
+
+      <button 
+        type="submit" 
+        disabled={isSubmitting}
+        className={isSubmitting ? 'submitting' : ''}
+      >
+        {isSubmitting ? 'Adding...' : 'Add Menu Item'}
+      </button>
     </form>
   );
-}; 
+};
 
 export default CreateMenu;
