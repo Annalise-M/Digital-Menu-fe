@@ -1,4 +1,4 @@
-import React, { createRef } from 'react';
+// import React, { createRef } from 'react';
 import MenuList from '../list/MenuList';
 import BeerList from '../list/BeerList';
 import styles from './allLists.scss';

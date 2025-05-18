@@ -8,8 +8,8 @@ import Home from '../pages/Home';
 import Signup from '../auth/Signup';
 import AuthProvider from '../auth/AuthProvider';
 import Login from '../auth/Login';
-import Dashboard from '../pages/Dashboard';
-import PrivateRoute from '../auth/PrivateRoute';
+// import Dashboard from '../pages/Dashboard';
+// import PrivateRoute from '../auth/PrivateRoute';
 
 const NavContent = () => (
   <div className="">
@@ -24,7 +24,11 @@ const NavContent = () => (
             <Route exact path="/" component={Home} />
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/login" component={Login} />
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
+
+            {/* This is a private route for admin to change global state. Need to find better placement with this component... */}
+
+            {/* <PrivateRoute exact path="/dashboard" component={Dashboard} /> */}
+            
           </AuthProvider>
         </Switch>
           

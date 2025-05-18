@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, createRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchBeers, removeBeer } from '../../actions/beerActions';
 import { selectBeers } from '../../selectors/beerSelectors';
@@ -12,21 +12,21 @@ gsap.registerPlugin(Draggable);
 const BeerList = () => {
   const beers = useSelector(selectBeers);
   const dispatch = useDispatch();
-  const beerCard = React.createRef();
+  const beerCard = createRef();
   // const container = React.createRef();
 
   useEffect(() => {
     dispatch(fetchBeers());
   }, []);
 
-  useEffect(() => {
-    Draggable.create('.draggable', {
-      type: "x, y",
-      onPress: function() {
-        console.log("clicked");
-      }
-    });
-  }, [])
+  // useEffect(() => {
+  //   Draggable.create('.draggable', {
+  //     type: "x, y",
+  //     onPress: function() {
+  //       console.log("clicked");
+  //     }
+  //   });
+  // }, [])
 
   const handleDelete = ({ target }) => {
     dispatch(removeBeer(target.value));
