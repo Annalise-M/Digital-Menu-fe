@@ -1,0 +1,343 @@
+// Variables
+$primary-color: #e2cc00;
+$dark-bg: #1a1a1a;
+$card-bg: #2a2a2a;
+$text-light: #f5f5f5;
+$text-muted: #a0a0a0;
+$accent: #ffd700;
+
+.home {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+  color: $text-light;
+  padding-top: 60px; // Account for fixed header
+}
+
+// Loading State
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  gap: 2rem;
+
+  .loading-spinner {
+    width: 60px;
+    height: 60px;
+    border: 4px solid rgba($primary-color, 0.2);
+    border-top-color: $primary-color;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: $text-muted;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Hero Section
+.hero {
+  position: relative;
+  height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)),
+              url('../../assets/taphouse_stockphoto.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(0, 0, 0, 0.7) 100%);
+  }
+
+  .hero-content {
+    position: relative;
+    text-align: center;
+    z-index: 2;
+    padding: 0 2rem;
+  }
+
+  .hero-title {
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    background: linear-gradient(135deg, $primary-color 0%, $accent 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1rem;
+    text-shadow: 0 4px 20px rgba($primary-color, 0.3);
+  }
+
+  .hero-subtitle {
+    font-size: clamp(1.2rem, 3vw, 1.8rem);
+    color: $text-light;
+    letter-spacing: 3px;
+    margin-bottom: 2rem;
+  }
+
+  .hero-divider {
+    width: 120px;
+    height: 3px;
+    background: linear-gradient(90deg, transparent, $primary-color, transparent);
+    margin: 0 auto;
+  }
+}
+
+// Section Styling
+.menu-section,
+.beer-section {
+  padding: 5rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.section-header {
+  text-align: center;
+  margin-bottom: 4rem;
+
+  .section-title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: $primary-color;
+    margin-bottom: 1rem;
+  }
+
+  .title-underline {
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, transparent, $primary-color, transparent);
+    margin: 0 auto;
+  }
+}
+
+// Menu Grid
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.menu-card {
+  position: relative;
+  background: $card-bg;
+  border-radius: 12px;
+  padding: 2rem;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  overflow: hidden;
+  border: 1px solid rgba($primary-color, 0.1);
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 40px rgba($primary-color, 0.2),
+                0 0 40px rgba($primary-color, 0.1);
+    border-color: rgba($primary-color, 0.4);
+
+    .card-accent {
+      transform: scaleX(1);
+    }
+  }
+
+  .card-accent {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, $primary-color, $accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .card-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .menu-item-name {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: $text-light;
+    margin-bottom: 0.8rem;
+    letter-spacing: 1px;
+  }
+
+  .menu-item-detail {
+    font-size: 0.95rem;
+    color: $text-muted;
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+  }
+
+  .menu-item-price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.3rem;
+    color: $primary-color;
+    font-weight: 700;
+
+    .price-label {
+      font-size: 1.2rem;
+    }
+
+    .price-value {
+      font-size: 1.8rem;
+    }
+  }
+}
+
+// Beer Grid
+.beer-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
+  padding: 0 1rem;
+}
+
+.beer-card {
+  position: relative;
+  background: linear-gradient(145deg, $card-bg 0%, darken($card-bg, 5%) 100%);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  border: 2px solid rgba($primary-color, 0.15);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba($primary-color, 0.1) 0%, transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  &:hover {
+    transform: translateY(-6px) scale(1.02);
+    box-shadow: 0 15px 35px rgba($primary-color, 0.25);
+    border-color: rgba($primary-color, 0.5);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .beer-icon {
+      transform: scale(1.2) rotate(10deg);
+    }
+  }
+
+  .beer-card-inner {
+    position: relative;
+    z-index: 2;
+  }
+
+  .beer-icon {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    transition: transform 0.3s ease;
+  }
+
+  .beer-brewery {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: $text-light;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.5px;
+  }
+
+  .beer-style {
+    font-size: 1rem;
+    color: $text-muted;
+    margin-bottom: 1.5rem;
+    font-style: italic;
+  }
+
+  .beer-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 1rem;
+    border-top: 1px solid rgba($primary-color, 0.2);
+
+    .beer-abv {
+      font-size: 0.9rem;
+      color: $text-muted;
+      font-weight: 600;
+    }
+
+    .beer-price {
+      font-size: 1.4rem;
+      color: $primary-color;
+      font-weight: 700;
+    }
+  }
+}
+
+// Footer
+.home-footer {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: darken($dark-bg, 5%);
+  color: $text-muted;
+  font-size: 0.9rem;
+  border-top: 1px solid rgba($primary-color, 0.1);
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .hero {
+    height: 60vh;
+    background-attachment: scroll;
+  }
+
+  .menu-grid,
+  .beer-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .menu-section,
+  .beer-section {
+    padding: 3rem 1rem;
+  }
+
+  .section-header {
+    margin-bottom: 2.5rem;
+  }
+}
+
+@media (min-width: 1600px) {
+  .menu-grid {
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+  }
+
+  .beer-grid {
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  }
+}
