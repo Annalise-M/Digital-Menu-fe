@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { createMenu } from '../../actions/menuActions';
+import { useCreateMenu } from '../../hooks/useMenus';
 import FormField from './FormField';
 import './createMenu.scss';
 
@@ -12,10 +11,9 @@ const CreateMenu = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  const dispatch = useDispatch();
+  const createMenu = useCreateMenu();
 
   const validateForm = () => {
     const newErrors = {};
@@ -55,33 +53,34 @@ const CreateMenu = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
-    setIsSubmitting(true);
     setSubmitSuccess(false);
 
-    try {
-      await dispatch(createMenu({
+    createMenu.mutate(
+      {
         ...formData,
         price: parseFloat(formData.price)
-      }));
-      
-      setFormData({
-        item: '',
-        detail: '',
-        price: ''
-      });
-      setSubmitSuccess(true);
-    } catch (error) {
-      setErrors({
-        submit: 'Failed to add menu item. Please try again.'
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+      },
+      {
+        onSuccess: () => {
+          setFormData({
+            item: '',
+            detail: '',
+            price: ''
+          });
+          setSubmitSuccess(true);
+        },
+        onError: () => {
+          setErrors({
+            submit: 'Failed to add menu item. Please try again.'
+          });
+        }
+      }
+    );
   };
 
   return (
@@ -130,12 +129,12 @@ const CreateMenu = () => {
         <div className="success-message">Menu item added successfully!</div>
       )}
 
-      <button 
-        type="submit" 
-        disabled={isSubmitting}
-        className={isSubmitting ? 'submitting' : ''}
+      <button
+        type="submit"
+        disabled={createMenu.isPending}
+        className={createMenu.isPending ? 'submitting' : ''}
       >
-        {isSubmitting ? 'Adding...' : 'Add Menu Item'}
+        {createMenu.isPending ? 'Adding...' : 'Add Menu Item'}
       </button>
     </form>
   );

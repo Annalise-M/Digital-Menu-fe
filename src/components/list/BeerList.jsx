@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchBeers, removeBeer } from '../../actions/beerActions';
-import { selectBeers } from '../../selectors/beerSelectors';
+import React, { useState } from 'react';
+import { useBeers, useDeleteBeer } from '../../hooks/useBeers';
 import DraggableGrid from './DraggableGrid';
 
 const BeerList = () => {
-  const beers = useSelector(selectBeers);
-  const dispatch = useDispatch();
+  const { data: beers = [], isLoading, error } = useBeers();
+  const deleteBeer = useDeleteBeer();
   const [strikethroughItems, setStrikethroughItems] = useState({});
 
-  useEffect(() => {
-    dispatch(fetchBeers());
-  }, []);
-
   const handleDelete = ({ target }) => {
-    dispatch(removeBeer(target.value));
+    deleteBeer.mutate(target.value);
   };
 
   const handleStrikethrough = (id) => {
@@ -50,6 +44,9 @@ const BeerList = () => {
       <button value={beer.id} onClick={handleDelete}>🗑️</button>
     </div>
   ));
+
+  if (isLoading) return <div className="beer-list-container"><h2>Loading beers...</h2></div>;
+  if (error) return <div className="beer-list-container"><h2>Error loading beers: {error.message}</h2></div>;
 
   return (
     <div data-testid="beers" className="beer-list-container">

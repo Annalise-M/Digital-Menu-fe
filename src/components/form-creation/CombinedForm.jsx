@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { createBeer } from '../../actions/beerActions';
-import { createMenu } from '../../actions/menuActions';
+import { useCreateBeer } from '../../hooks/useBeers';
+import { useCreateMenu } from '../../hooks/useMenus';
 import FormField from './FormField';
 import './combinedForm.scss';
 
@@ -20,10 +19,10 @@ const CombinedForm = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  const dispatch = useDispatch();
+  const createBeer = useCreateBeer();
+  const createMenu = useCreateMenu();
 
   const validateForm = () => {
     const newErrors = {};
@@ -79,46 +78,45 @@ const CombinedForm = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
-    setIsSubmitting(true);
     setSubmitSuccess(false);
 
-    try {
-      if (formType === 'beer') {
-        await dispatch(createBeer({
+    const mutation = formType === 'beer' ? createBeer : createMenu;
+    const data = formType === 'beer'
+      ? {
           brewery: formData.brewery,
           style: formData.style,
           abv: parseFloat(formData.abv),
           price: parseFloat(formData.price)
-        }));
-      } else {
-        await dispatch(createMenu({
+        }
+      : {
           item: formData.item,
           detail: formData.detail,
           price: parseFloat(formData.price)
+        };
+
+    mutation.mutate(data, {
+      onSuccess: () => {
+        // Reset only the relevant fields
+        setFormData(prev => ({
+          ...prev,
+          ...(formType === 'beer'
+            ? { brewery: '', style: '', abv: '', price: '' }
+            : { item: '', detail: '', price: '' }
+          )
         }));
+        setSubmitSuccess(true);
+      },
+      onError: () => {
+        setErrors({
+          submit: `Failed to add ${formType === 'beer' ? 'beer' : 'menu item'}. Please try again.`
+        });
       }
-      
-      // Reset only the relevant fields
-      setFormData(prev => ({
-        ...prev,
-        ...(formType === 'beer' 
-          ? { brewery: '', style: '', abv: '', price: '' }
-          : { item: '', detail: '', price: '' }
-        )
-      }));
-      setSubmitSuccess(true);
-    } catch (error) {
-      setErrors({
-        submit: `Failed to add ${formType === 'beer' ? 'beer' : 'menu item'}. Please try again.`
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    });
   };
 
   const toggleFormType = () => {
@@ -233,12 +231,12 @@ const CombinedForm = () => {
           </div>
         )}
 
-        <button 
-          type="submit" 
-          disabled={isSubmitting}
-          className={isSubmitting ? 'submitting' : ''}
+        <button
+          type="submit"
+          disabled={createBeer.isPending || createMenu.isPending}
+          className={createBeer.isPending || createMenu.isPending ? 'submitting' : ''}
         >
-          {isSubmitting ? 'Adding...' : `Add ${formType === 'beer' ? 'Beer' : 'Menu Item'}`}
+          {createBeer.isPending || createMenu.isPending ? 'Adding...' : `Add ${formType === 'beer' ? 'Beer' : 'Menu Item'}`}
         </button>
       </form>
     </div>

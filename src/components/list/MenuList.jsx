@@ -1,20 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchMenus, removeMenu } from '../../actions/menuActions';
-import { selectMenus } from '../../selectors/menuSelectors';
+import React, { useState } from 'react';
+import { useMenus, useDeleteMenu } from '../../hooks/useMenus';
 import DraggableGrid from './DraggableGrid';
 
 const MenuList = () => {
-  const menus = useSelector(selectMenus);
-  const dispatch = useDispatch();
+  const { data: menus = [], isLoading, error } = useMenus();
+  const deleteMenu = useDeleteMenu();
   const [strikethroughItems, setStrikethroughItems] = useState({});
 
-  useEffect(() => {
-    dispatch(fetchMenus());
-  }, []);
-
   const handleDelete = ({ target }) => {
-    dispatch(removeMenu(target.value));
+    deleteMenu.mutate(target.value);
   };
 
   const handleStrikethrough = (id) => {
@@ -49,6 +43,9 @@ const MenuList = () => {
       <button value={menu.id} onClick={handleDelete}>🗑️</button>
     </div>
   ));
+
+  if (isLoading) return <div className="menu-list-container"><h2>Loading menus...</h2></div>;
+  if (error) return <div className="menu-list-container"><h2>Error loading menus: {error.message}</h2></div>;
 
   return (
     <div data-testid="menus" className="menu-list-container">

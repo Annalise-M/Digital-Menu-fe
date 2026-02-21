@@ -1,40 +1,20 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { getMenus } from '../../services/api/menusApi';
-import { getBeers } from '../../services/api/beersApi';
+import { useMenus } from '../../hooks/useMenus';
+import { useBeers } from '../../hooks/useBeers';
 import './home.scss';
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
-  const [menus, setMenus] = useState([]);
-  const [beers, setBeers] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { data: menus = [], isLoading: menusLoading } = useMenus();
+  const { data: beers = [], isLoading: beersLoading } = useBeers();
+  const loading = menusLoading || beersLoading;
 
   const heroRef = useRef(null);
   const menuSectionRef = useRef(null);
   const beerSectionRef = useRef(null);
-
-  useEffect(() => {
-    // Fetch menu and beer data
-    const fetchData = async () => {
-      try {
-        const [menuData, beerData] = await Promise.all([
-          getMenus(),
-          getBeers()
-        ]);
-        setMenus(menuData);
-        setBeers(beerData);
-        setLoading(false);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
 
   useEffect(() => {
     if (loading) return;

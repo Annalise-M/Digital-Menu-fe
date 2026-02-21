@@ -1,12 +1,7 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { createBeer } from '../../actions/beerActions';
+import { useCreateBeer } from '../../hooks/useBeers';
 import FormField from './FormField';
 import './createBeer.scss';
-
-// Should I place the reference in the element that's being corrected ? 
-
-// Look into injecting the GSAP plugin's (look at MenuList.jsx & BeerList.jsx) here to get the rendering per card => check on the placement of the container element and see how & where that lands)
 
 const CreateBeer = () => {
   const [formData, setFormData] = useState({
@@ -17,10 +12,9 @@ const CreateBeer = () => {
   });
 
   const [errors, setErrors] = useState({});
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitSuccess, setSubmitSuccess] = useState(false);
 
-  const dispatch = useDispatch();
+  const createBeer = useCreateBeer();
 
   const validateForm = () => {
     const newErrors = {};
@@ -66,35 +60,36 @@ const CreateBeer = () => {
 
   const handleSubmit = async e => {
     e.preventDefault();
-    
+
     if (!validateForm()) {
       return;
     }
 
-    setIsSubmitting(true);
     setSubmitSuccess(false);
 
-    try {
-      await dispatch(createBeer({
+    createBeer.mutate(
+      {
         ...formData,
         abv: parseFloat(formData.abv),
         price: parseFloat(formData.price)
-      }));
-      
-      setFormData({
-        brewery: '',
-        style: '',
-        abv: '',
-        price: ''
-      });
-      setSubmitSuccess(true);
-    } catch (error) {
-      setErrors({
-        submit: 'Failed to add beer. Please try again.'
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+      },
+      {
+        onSuccess: () => {
+          setFormData({
+            brewery: '',
+            style: '',
+            abv: '',
+            price: ''
+          });
+          setSubmitSuccess(true);
+        },
+        onError: () => {
+          setErrors({
+            submit: 'Failed to add beer. Please try again.'
+          });
+        }
+      }
+    );
   };
 
   return (
@@ -155,12 +150,12 @@ const CreateBeer = () => {
         <div className="success-message">Beer added successfully!</div>
       )}
 
-      <button 
-        type="submit" 
-        disabled={isSubmitting}
-        className={isSubmitting ? 'submitting' : ''}
+      <button
+        type="submit"
+        disabled={createBeer.isPending}
+        className={createBeer.isPending ? 'submitting' : ''}
       >
-        {isSubmitting ? 'Adding...' : 'Add Beer'}
+        {createBeer.isPending ? 'Adding...' : 'Add Beer'}
       </button>
     </form>
   );
