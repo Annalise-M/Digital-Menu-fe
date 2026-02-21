@@ -21,22 +21,24 @@ const App3 = () => {
   const [menuState, setMenuState] = useState(false);
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="app container">
+      <div className="min-h-screen bg-dark">
         <Router>
           <Header menuState={menuState} setMenuState={setMenuState} />
-          <AuthProvider>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route
-                path="/dashboard"
-                element={
-                  <PrivateRoute>
-                    <Dashboard />
-                  </PrivateRoute>
-                }
-              />
-            </Routes>
-          </AuthProvider>
+          <main className="pt-20">
+            <AuthProvider>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route
+                  path="/dashboard"
+                  element={
+                    <PrivateRoute>
+                      <Dashboard />
+                    </PrivateRoute>
+                  }
+                />
+              </Routes>
+            </AuthProvider>
+          </main>
         </Router>
       </div>
     </QueryClientProvider>

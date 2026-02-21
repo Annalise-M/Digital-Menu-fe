@@ -2,19 +2,37 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const NavContent = () => (
-  <div className="">
-    <nav className="sidebarNavOverlay">
-      <div className="sidebar-top">
-        <div className="links-wrapper">
-          <Link to="/">Home</Link>
-          <Link to="/signup">Signup</Link>
-          <Link to="/login">Login</Link>
-          <Link to="/dashboard">Dashboard</Link>
-        </div>
-      </div>
-      <div className="sidebar-bottom"></div>
-    </nav>
-  </div>
+  <nav className="h-full flex flex-col justify-between p-8">
+    <div className="space-y-4">
+      <Link
+        to="/"
+        className="block text-2xl font-semibold text-gray-300 hover:text-gold transition-colors duration-300 transform hover:translate-x-2"
+      >
+        Home
+      </Link>
+      <Link
+        to="/signup"
+        className="block text-2xl font-semibold text-gray-300 hover:text-gold transition-colors duration-300 transform hover:translate-x-2"
+      >
+        Signup
+      </Link>
+      <Link
+        to="/login"
+        className="block text-2xl font-semibold text-gray-300 hover:text-gold transition-colors duration-300 transform hover:translate-x-2"
+      >
+        Login
+      </Link>
+      <Link
+        to="/dashboard"
+        className="block text-2xl font-semibold text-gray-300 hover:text-gold transition-colors duration-300 transform hover:translate-x-2"
+      >
+        Dashboard
+      </Link>
+    </div>
+    <div className="text-gray-600 text-sm">
+      <p>&copy; 2026 Taphouse</p>
+    </div>
+  </nav>
 );
 
 export default NavContent; 

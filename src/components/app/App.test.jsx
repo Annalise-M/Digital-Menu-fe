@@ -13,7 +13,7 @@ describe('App3 component', () => {
       expect(container).toBeTruthy();
     });
 
-    // Basic render test
-    expect(container.querySelector('.app')).toBeInTheDocument();
+    // Basic render test - check for main element
+    expect(container.querySelector('main')).toBeInTheDocument();
   });
 });
