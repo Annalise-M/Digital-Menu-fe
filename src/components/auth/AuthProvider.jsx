@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { getVerify, postLogin, postSignup } from '../../services/auth/auth';
 
 const AuthProvider = ({ children }) => {
   const [currentAdmin, setCurrentAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // backend call on creating admin
   const signup = (email, password) => {
     postSignup(email, password)
       .then(admin => setCurrentAdmin(admin))
-      .then(() => history.push('/dashboard'))
+      .then(() => navigate('/dashboard'))
+      .catch(error => {
+        console.error('Signup failed:', error);
+      })
       .finally(() => setLoading(false));
   };
 
@@ -20,7 +23,10 @@ const AuthProvider = ({ children }) => {
   const login = (email, password) => {
     postLogin(email, password)
       .then(admin => setCurrentAdmin(admin))
-      .then(() => history.push('/dashboard'))
+      .then(() => navigate('/dashboard'))
+      .catch(error => {
+        console.error('Login failed:', error);
+      })
       .finally(() => setLoading(false));
   };
 
@@ -28,6 +34,9 @@ const AuthProvider = ({ children }) => {
   useEffect(() => {
     getVerify()
       .then(admin => setCurrentAdmin(admin))
+      .catch(() => {
+        // User not authenticated, leave currentAdmin as null
+      })
       .finally(() => setLoading(false));
   }, []);
 

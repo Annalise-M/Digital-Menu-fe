@@ -9,10 +9,18 @@
       "@testing-library/jest-dom/extend-expect",
       "<rootDir>/src/setupTests.js"
     ],
+    "transform": {
+      "^.+\\.(js|jsx)$": "babel-jest"
+    },
     "moduleNameMapper": {
-      "\\.(css)$": "identity-obj-proxy",
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js"
-    }
+      "\\.(css|scss)$": "identity-obj-proxy",
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/__mocks__/fileMock.js",
+      "^gsap$": "<rootDir>/__mocks__/gsapMock.js",
+      "^gsap/(.*)$": "<rootDir>/__mocks__/gsapMock.js"
+    },
+    "transformIgnorePatterns": [
+      "node_modules/(?!gsap)"
+    ]
   },
   "scripts": {
     "test": "jest --verbose",
@@ -27,11 +35,11 @@
     "@gsap/react": "^1.0.1",
     "delay": "^5.0.0",
     "gsap": "^3.6.1",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "react-icons": "^4.2.0",
     "react-redux": "^7.2.4",
-    "react-router-dom": "^5.3.4",
+    "react-router-dom": "^6.30.3",
     "react-spring": "^9.7.3",
     "react-transition-group": "^4.4.1",
     "redux": "^4.1.0",
@@ -49,6 +57,7 @@
     "@types/jest": "^26.0.22",
     "autoprefixer": "^10.2.5",
     "babel-eslint": "^10.1.0",
+    "babel-jest": "^30.2.0",
     "babel-loader": "^8.2.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^8.1.1",

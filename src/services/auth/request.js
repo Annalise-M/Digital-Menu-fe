@@ -1,5 +1,3 @@
-import fetch from 'node-fetch';
-
 const request = async(path, method, body) => {
   const res = await fetch(`${process.env.API_URL}${path}`, {
     method,

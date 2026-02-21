@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Dashboard from '../pages/Dashboard';
 import Header from '../pages/Header';
 import Home from '../pages/Home';
@@ -13,8 +13,17 @@ const App3 = () => {
       <Router>
         <Header menuState={menuState} setMenuState={setMenuState} />
         <AuthProvider>
-          <Home />
-          <PrivateRoute exact path="/dashboard" component={Dashboard} />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route
+              path="/dashboard"
+              element={
+                <PrivateRoute>
+                  <Dashboard />
+                </PrivateRoute>
+              }
+            />
+          </Routes>
         </AuthProvider>
       </Router>
     </div>
