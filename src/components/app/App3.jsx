@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Dashboard from '../pages/Dashboard';
 import Header from '../pages/Header';
 import Home from '../pages/Home';
+import Settings from '../pages/Settings';
 import Login from '../auth/Login';
 import Signup from '../auth/Signup';
 import PrivateRoute from '../auth/PrivateRoute';
@@ -35,6 +36,14 @@ const App3 = () => {
               element={
                 <PrivateRoute>
                   <Dashboard />
+                </PrivateRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <PrivateRoute>
+                  <Settings />
                 </PrivateRoute>
               }
             />

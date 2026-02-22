@@ -24,6 +24,7 @@ const NavContent = ({ setMenuState }) => {
         ) : (
           <>
             <Link to="/dashboard" onClick={() => setMenuState(false)}>Dashboard</Link>
+            <Link to="/settings" onClick={() => setMenuState(false)}>Settings</Link>
             <button onClick={handleLogout} className="logout-btn">Logout</button>
           </>
         )}

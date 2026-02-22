@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useMenus } from '../../hooks/useMenus';
 import { useBeers } from '../../hooks/useBeers';
+import { useSettings } from '../../hooks/useSettings';
 import './home.scss';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -15,7 +16,13 @@ export default function Home() {
   const { data: beers = [], isLoading: beersLoading } = useBeers({
     refetchInterval: 10000, // Poll every 10 seconds
   });
-  const loading = menusLoading || beersLoading;
+  const { data: settings, isLoading: settingsLoading } = useSettings();
+  const loading = menusLoading || beersLoading || settingsLoading;
+
+  // Extract settings with defaults
+  const restaurantName = settings?.restaurantName || 'The Traveling Taphouse';
+  const tagline = settings?.tagline || 'Craft Beers & Culinary Excellence';
+  const backgroundImage = settings?.backgroundImageUrl;
 
   const heroRef = useRef(null);
   const menuSectionRef = useRef(null);
@@ -97,10 +104,14 @@ export default function Home() {
   return (
     <div className="home">
       {/* Hero Section */}
-      <section ref={heroRef} className="hero">
+      <section
+        ref={heroRef}
+        className="hero"
+        style={backgroundImage ? { backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${backgroundImage})` } : {}}
+      >
         <div className="hero-content">
-          <h1 className="hero-title">Welcome to The Traveling Taphouse</h1>
-          <p className="hero-subtitle">Craft Beers & Culinary Excellence</p>
+          <h1 className="hero-title">Welcome to {restaurantName}</h1>
+          <p className="hero-subtitle">{tagline}</p>
           <div className="hero-divider"></div>
         </div>
       </section>
@@ -159,7 +170,7 @@ export default function Home() {
 
       {/* Footer */}
       <footer className="home-footer">
-        <p>&copy; 2026 The Traveling Taphouse. All rights reserved.</p>
+        <p>&copy; 2026 {restaurantName}. All rights reserved.</p>
       </footer>
     </div>
   );
