@@ -1,43 +1,75 @@
-@import url('https://fonts.googleapis.com/css2?family=Antonio:wght@100&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Playfair+Display:wght@700;900&display=swap');
+
+// Color Palette - Sophisticated & Modern
+$gold-light: #D4AF37;    // Classic gold
+$gold: #B8860B;          // Dark goldenrod (elegant)
+$gold-dark: #8B6914;     // Bronze gold
+$copper: #B87333;        // Warm copper accent
+$charcoal: #1C1C1E;      // Rich black
+$slate: #2C2C2E;         // Dark gray
+$cream: #F5F1E8;         // Warm white
+$text-light: #E5E5E7;    // Light gray text
+$text-muted: #98989D;    // Muted gray
 
 body {
-  font-family: 'Antonio', sans-serif;
-  background-color: #efefef;
-  background-image: url('../../assets/taphouse_stockphoto.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+  background-color: $charcoal;
+  color: $text-light;
   padding: 0;
   margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 a {
   text-decoration: none;
 }
 
-// header
+// header - Modern Glassmorphism Design
 .site-header header {
   display: flex;
   justify-content: space-between;
+  align-items: center;
   position: fixed;
-  background-color: #e2cc00;
+  background: rgba(28, 28, 30, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
   top: 0;
   left: 0;
   right: 0;
   margin: auto;
-  padding-bottom: 5px;
-  z-index: 10;
+  padding: 0.75rem 1.5rem;
+  z-index: 100;
+  transition: all 0.3s ease;
 
   .brand-icon a {
     display: inline-flex;
     justify-content: center;
     align-items: center;
-    font-size: 44px;
+    gap: 0.75rem;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
     font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: #212121;
+    text-transform: capitalize;
+    letter-spacing: 1px;
+    color: $gold-light;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: $gold;
+      transform: translateY(-1px);
+    }
   }
-  
+
   .brand-icon .icon {
     display: inline-flex;
     font-size: 2rem;
@@ -45,6 +77,12 @@ a {
     width: 48px;
     justify-content: center;
     align-items: center;
+    color: $gold-light;
+    transition: all 0.3s ease;
+
+    &:hover {
+      transform: scale(1.1) rotate(-5deg);
+    }
   }
 
   .menu-trigger {
@@ -60,23 +98,29 @@ a {
     position: relative;
     padding: 10px;
     cursor: pointer;
-    margin-right: 4px;
-    margin-top: 7px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+
+    &:hover {
+      background-color: rgba($gold-light, 0.1);
+    }
 
     span {
       display: inline-flex;
-      width: 30px;
-      height: 4px;
+      width: 28px;
+      height: 3px;
       border-radius: 3px;
-      background-color: #212121;
-      transition: all ease 0.5s;
+      background-color: $gold-light;
+      transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
     }
   }
 
   .menu-close {
+    background-color: rgba($gold-light, 0.15);
+
     span {
       position: absolute;
-      background-color: #efefef;
+      background-color: $gold-light;
       &:nth-child(1) {
         transform: rotate(45deg);
       }
@@ -88,7 +132,6 @@ a {
         height: 0;
         width: 0;
       }
-
     }
   }
   // sidebar navigation

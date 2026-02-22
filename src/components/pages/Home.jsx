@@ -3,6 +3,7 @@ import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useMenus } from '../../hooks/useMenus';
 import { useBeers } from '../../hooks/useBeers';
+import './home.scss';
 
 gsap.registerPlugin(ScrollTrigger);
 

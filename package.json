@@ -33,6 +33,7 @@
   "license": "ISC",
   "dependencies": {
     "@gsap/react": "^1.0.1",
+    "@tailwindcss/postcss": "^4.2.0",
     "@tanstack/react-query": "^5.90.21",
     "delay": "^5.0.0",
     "gsap": "^3.6.1",

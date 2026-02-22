@@ -1,16 +1,19 @@
-// Variables
-$primary-color: #e2cc00;
-$dark-bg: #1a1a1a;
-$card-bg: #2a2a2a;
-$text-light: #f5f5f5;
-$text-muted: #a0a0a0;
-$accent: #ffd700;
+// Sophisticated Color Palette
+$gold-light: #D4AF37;
+$gold: #B8860B;
+$gold-dark: #8B6914;
+$copper: #B87333;
+$charcoal: #1C1C1E;
+$slate: #2C2C2E;
+$slate-light: #3A3A3C;
+$cream: #F5F1E8;
+$text-light: #E5E5E7;
+$text-muted: #98989D;
 
 .home {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%);
+  background: linear-gradient(135deg, $charcoal 0%, darken($charcoal, 2%) 50%, $charcoal 100%);
   color: $text-light;
-  padding-top: 60px; // Account for fixed header
 }
 
 // Loading State
@@ -25,10 +28,11 @@ $accent: #ffd700;
   .loading-spinner {
     width: 60px;
     height: 60px;
-    border: 4px solid rgba($primary-color, 0.2);
-    border-top-color: $primary-color;
+    border: 4px solid rgba($gold-light, 0.2);
+    border-top-color: $gold-light;
     border-radius: 50%;
     animation: spin 1s linear infinite;
+    box-shadow: 0 0 20px rgba($gold-light, 0.3);
   }
 
   p {
@@ -75,30 +79,35 @@ $accent: #ffd700;
   }
 
   .hero-title {
-    font-size: clamp(2.5rem, 8vw, 5rem);
-    font-weight: 700;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    background: linear-gradient(135deg, $primary-color 0%, $accent 100%);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 8vw, 5.5rem);
+    font-weight: 900;
+    letter-spacing: 2px;
+    background: linear-gradient(135deg, $gold-light 0%, $copper 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 1rem;
-    text-shadow: 0 4px 20px rgba($primary-color, 0.3);
+    margin-bottom: 1.5rem;
+    text-shadow: 0 4px 30px rgba($gold-light, 0.4);
+    line-height: 1.1;
   }
 
   .hero-subtitle {
-    font-size: clamp(1.2rem, 3vw, 1.8rem);
-    color: $text-light;
-    letter-spacing: 3px;
-    margin-bottom: 2rem;
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: 400;
+    color: $cream;
+    letter-spacing: 4px;
+    margin-bottom: 2.5rem;
+    text-transform: uppercase;
   }
 
   .hero-divider {
-    width: 120px;
+    width: 150px;
     height: 3px;
-    background: linear-gradient(90deg, transparent, $primary-color, transparent);
+    background: linear-gradient(90deg, transparent, $gold-light, transparent);
     margin: 0 auto;
+    box-shadow: 0 0 20px rgba($gold-light, 0.5);
   }
 }
 
@@ -115,19 +124,21 @@ $accent: #ffd700;
   margin-bottom: 4rem;
 
   .section-title {
-    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 700;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: $primary-color;
-    margin-bottom: 1rem;
+    letter-spacing: 1px;
+    color: $gold-light;
+    margin-bottom: 1.5rem;
   }
 
   .title-underline {
-    width: 80px;
+    width: 100px;
     height: 4px;
-    background: linear-gradient(90deg, transparent, $primary-color, transparent);
+    background: linear-gradient(90deg, transparent, $gold-light, $copper, $gold-light, transparent);
     margin: 0 auto;
+    border-radius: 2px;
+    box-shadow: 0 0 15px rgba($gold-light, 0.4);
   }
 }
 
@@ -141,18 +152,31 @@ $accent: #ffd700;
 
 .menu-card {
   position: relative;
-  background: $card-bg;
-  border-radius: 12px;
-  padding: 2rem;
+  background: linear-gradient(145deg, $slate 0%, darken($slate, 3%) 100%);
+  border-radius: 16px;
+  padding: 2.5rem;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
-  border: 1px solid rgba($primary-color, 0.1);
+  border: 1px solid rgba($gold-light, 0.1);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle, rgba($gold-light, 0.05) 0%, transparent 70%);
+    border-radius: 50%;
+    transform: translate(50%, -50%);
+  }
 
   &:hover {
-    transform: translateY(-8px);
-    box-shadow: 0 20px 40px rgba($primary-color, 0.2),
-                0 0 40px rgba($primary-color, 0.1);
-    border-color: rgba($primary-color, 0.4);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 25px 50px rgba($gold-light, 0.2),
+                0 0 60px rgba($gold-light, 0.1);
+    border-color: rgba($gold-light, 0.4);
 
     .card-accent {
       transform: scaleX(1);
@@ -164,11 +188,11 @@ $accent: #ffd700;
     top: 0;
     left: 0;
     right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, $primary-color, $accent);
+    height: 3px;
+    background: linear-gradient(90deg, $gold-light, $copper);
     transform: scaleX(0);
     transform-origin: left;
-    transition: transform 0.4s ease;
+    transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
   }
 
   .card-content {
@@ -195,15 +219,16 @@ $accent: #ffd700;
     display: flex;
     align-items: baseline;
     gap: 0.3rem;
-    color: $primary-color;
+    color: $gold-light;
     font-weight: 700;
 
     .price-label {
-      font-size: 1.2rem;
+      font-size: 1.3rem;
     }
 
     .price-value {
-      font-size: 1.8rem;
+      font-size: 2rem;
+      text-shadow: 0 0 20px rgba($gold-light, 0.3);
     }
   }
 }
@@ -218,13 +243,14 @@ $accent: #ffd700;
 
 .beer-card {
   position: relative;
-  background: linear-gradient(145deg, $card-bg 0%, darken($card-bg, 5%) 100%);
-  border-radius: 16px;
+  background: linear-gradient(145deg, $slate 0%, darken($slate, 5%) 100%);
+  border-radius: 20px;
   padding: 2.5rem 2rem;
   text-align: center;
-  transition: all 0.3s ease;
-  border: 2px solid rgba($primary-color, 0.15);
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba($gold-light, 0.15);
   overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 
   &::before {
     content: '';
@@ -233,22 +259,22 @@ $accent: #ffd700;
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba($primary-color, 0.1) 0%, transparent 70%);
+    background: radial-gradient(circle, rgba($gold-light, 0.08) 0%, transparent 70%);
     opacity: 0;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.5s ease;
   }
 
   &:hover {
-    transform: translateY(-6px) scale(1.02);
-    box-shadow: 0 15px 35px rgba($primary-color, 0.25);
-    border-color: rgba($primary-color, 0.5);
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 20px 40px rgba($gold-light, 0.25);
+    border-color: rgba($gold-light, 0.5);
 
     &::before {
       opacity: 1;
     }
 
     .beer-icon {
-      transform: scale(1.2) rotate(10deg);
+      transform: scale(1.3) rotate(12deg);
     }
   }
 
@@ -282,19 +308,21 @@ $accent: #ffd700;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 1rem;
-    border-top: 1px solid rgba($primary-color, 0.2);
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba($gold-light, 0.2);
 
     .beer-abv {
       font-size: 0.9rem;
       color: $text-muted;
       font-weight: 600;
+      letter-spacing: 0.5px;
     }
 
     .beer-price {
-      font-size: 1.4rem;
-      color: $primary-color;
+      font-size: 1.5rem;
+      color: $gold-light;
       font-weight: 700;
+      text-shadow: 0 0 15px rgba($gold-light, 0.3);
     }
   }
 }
@@ -303,10 +331,15 @@ $accent: #ffd700;
 .home-footer {
   text-align: center;
   padding: 3rem 2rem;
-  background: darken($dark-bg, 5%);
+  background: darken($charcoal, 3%);
   color: $text-muted;
   font-size: 0.9rem;
-  border-top: 1px solid rgba($primary-color, 0.1);
+  border-top: 1px solid rgba($gold-light, 0.1);
+
+  p {
+    font-weight: 400;
+    letter-spacing: 1px;
+  }
 }
 
 // Responsive Design
