@@ -1,21 +1,25 @@
-import React, { useState } from 'react';
-import { useBeers, useDeleteBeer } from '../../hooks/useBeers';
+import React from 'react';
+import { useBeers, useDeleteBeer, useUpdateBeer } from '../../hooks/useBeers';
 import DraggableGrid from './DraggableGrid';
 
 const BeerList = () => {
   const { data: beers = [], isLoading, error } = useBeers();
   const deleteBeer = useDeleteBeer();
-  const [strikethroughItems, setStrikethroughItems] = useState({});
+  const updateBeer = useUpdateBeer();
 
   const handleDelete = ({ target }) => {
     deleteBeer.mutate(target.value);
   };
 
-  const handleStrikethrough = (id) => {
-    setStrikethroughItems(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
+  const handleToggleAvailability = (beer) => {
+    updateBeer.mutate({
+      id: beer.id,
+      brewery: beer.brewery,
+      style: beer.style,
+      abv: beer.abv,
+      price: beer.price,
+      available: !beer.available
+    });
   };
 
   const formatPrice = (price) => {
@@ -31,15 +35,15 @@ const BeerList = () => {
             type="checkbox"
             className="toggle-button"
             id={`strike-${beer.id}`}
-            checked={strikethroughItems[beer.id] || false}
-            onChange={() => handleStrikethrough(beer.id)}
+            checked={!beer.available}
+            onChange={() => handleToggleAvailability(beer)}
           />
           <label htmlFor={`strike-${beer.id}`}>Sold Out</label>
         </div>
-        <p className={strikethroughItems[beer.id] ? 'strike-through' : ''}>{beer.brewery}</p>
-        <p className={strikethroughItems[beer.id] ? 'strike-through' : ''}>{beer.style}</p>
-        <p className={strikethroughItems[beer.id] ? 'strike-through' : ''}>${formatPrice(beer.price)}</p>
-        <p className={`abv ${strikethroughItems[beer.id] ? 'strike-through' : ''}`}>{beer.abv}% ABV</p>
+        <p className={!beer.available ? 'strike-through' : ''}>{beer.brewery}</p>
+        <p className={!beer.available ? 'strike-through' : ''}>{beer.style}</p>
+        <p className={!beer.available ? 'strike-through' : ''}>${formatPrice(beer.price)}</p>
+        <p className={`abv ${!beer.available ? 'strike-through' : ''}`}>{beer.abv}% ABV</p>
       </div>
       <button value={beer.id} onClick={handleDelete}>🗑️</button>
     </div>

@@ -1,21 +1,24 @@
-import React, { useState } from 'react';
-import { useMenus, useDeleteMenu } from '../../hooks/useMenus';
+import React from 'react';
+import { useMenus, useDeleteMenu, useUpdateMenu } from '../../hooks/useMenus';
 import DraggableGrid from './DraggableGrid';
 
 const MenuList = () => {
   const { data: menus = [], isLoading, error } = useMenus();
   const deleteMenu = useDeleteMenu();
-  const [strikethroughItems, setStrikethroughItems] = useState({});
+  const updateMenu = useUpdateMenu();
 
   const handleDelete = ({ target }) => {
     deleteMenu.mutate(target.value);
   };
 
-  const handleStrikethrough = (id) => {
-    setStrikethroughItems(prev => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
+  const handleToggleAvailability = (menu) => {
+    updateMenu.mutate({
+      id: menu.id,
+      item: menu.item,
+      detail: menu.detail,
+      price: menu.price,
+      available: !menu.available
+    });
   };
 
   const formatPrice = (price) => {
@@ -31,14 +34,14 @@ const MenuList = () => {
             type="checkbox"
             className="toggle-button"
             id={`strike-${menu.id}`}
-            checked={strikethroughItems[menu.id] || false}
-            onChange={() => handleStrikethrough(menu.id)}
+            checked={!menu.available}
+            onChange={() => handleToggleAvailability(menu)}
           />
           <label htmlFor={`strike-${menu.id}`}>Sold Out</label>
         </div>
-        <p className={strikethroughItems[menu.id] ? 'strike-through' : ''}>{menu.item}</p>
-        <p className={strikethroughItems[menu.id] ? 'strike-through' : ''}>{menu.detail}</p>
-        <p className={strikethroughItems[menu.id] ? 'strike-through' : ''}>${formatPrice(menu.price)}</p>
+        <p className={!menu.available ? 'strike-through' : ''}>{menu.item}</p>
+        <p className={!menu.available ? 'strike-through' : ''}>{menu.detail}</p>
+        <p className={!menu.available ? 'strike-through' : ''}>${formatPrice(menu.price)}</p>
       </div>
       <button value={menu.id} onClick={handleDelete}>🗑️</button>
     </div>

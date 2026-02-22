@@ -10,24 +10,38 @@ const AuthProvider = ({ children }) => {
 
   // backend call on creating admin
   const signup = (email, password) => {
-    postSignup(email, password)
-      .then(admin => setCurrentAdmin(admin))
-      .then(() => navigate('/dashboard'))
+    return postSignup(email, password)
+      .then(admin => {
+        setCurrentAdmin(admin);
+        navigate('/dashboard');
+        return admin;
+      })
       .catch(error => {
         console.error('Signup failed:', error);
+        throw error; // Re-throw to allow component to catch it
       })
       .finally(() => setLoading(false));
   };
 
   // logging in admin
   const login = (email, password) => {
-    postLogin(email, password)
-      .then(admin => setCurrentAdmin(admin))
-      .then(() => navigate('/dashboard'))
+    return postLogin(email, password)
+      .then(admin => {
+        setCurrentAdmin(admin);
+        navigate('/dashboard');
+        return admin;
+      })
       .catch(error => {
         console.error('Login failed:', error);
+        throw error; // Re-throw to allow component to catch it
       })
       .finally(() => setLoading(false));
+  };
+
+  // logout admin
+  const logout = () => {
+    setCurrentAdmin(null);
+    navigate('/');
   };
 
   // verifies session cookie and sets current admin
@@ -44,7 +58,8 @@ const AuthProvider = ({ children }) => {
     currentAdmin,
     loading,
     signup,
-    login
+    login,
+    logout
   };
 
   return (

@@ -7,11 +7,12 @@ const beerKeys = {
 };
 
 // Fetch all beers
-export const useBeers = () => {
+export const useBeers = (options = {}) => {
   return useQuery({
     queryKey: beerKeys.all,
     queryFn: getBeers,
     staleTime: 1000 * 60 * 5, // 5 minutes
+    ...options, // Allow overriding with custom options (like refetchInterval)
   });
 };
 
@@ -25,6 +26,28 @@ export const useCreateBeer = () => {
       // Optimistically update the cache
       queryClient.setQueryData(beerKeys.all, (oldBeers) => {
         return oldBeers ? [newBeer, ...oldBeers] : [newBeer];
+      });
+    },
+  });
+};
+
+// Update a beer
+export const useUpdateBeer = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: ({ id, ...updates }) =>
+      fetch(`${process.env.API_URL}/api/v1/beers/${id}`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(updates)
+      }).then(res => res.json()),
+    onSuccess: (updatedBeer) => {
+      // Update the cache
+      queryClient.setQueryData(beerKeys.all, (oldBeers) => {
+        return oldBeers ? oldBeers.map(beer =>
+          beer.id === updatedBeer.id ? updatedBeer : beer
+        ) : [updatedBeer];
       });
     },
   });
