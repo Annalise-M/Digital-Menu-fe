@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useSettings, useUpdateSettings } from '../../hooks/useSettings';
 import './settings.scss';
 
 export default function Settings() {
+  const navigate = useNavigate();
   const { data: settings, isLoading } = useSettings();
   const updateMutation = useUpdateSettings();
 
@@ -15,6 +17,8 @@ export default function Settings() {
     accentColor: '#B87333',
     backgroundColor: '#1C1C1E',
   });
+  const [uploadingLogo, setUploadingLogo] = useState(false);
+  const [uploadingBackground, setUploadingBackground] = useState(false);
 
   useEffect(() => {
     if (settings) {
@@ -30,9 +34,57 @@ export default function Settings() {
     }
   }, [settings]);
 
+  // ESC key to close
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === 'Escape') {
+        navigate('/dashboard');
+      }
+    };
+    window.addEventListener('keydown', handleEsc);
+    return () => window.removeEventListener('keydown', handleEsc);
+  }, [navigate]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleFileUpload = async (e, fieldName) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    // Check file type
+    if (!file.type.startsWith('image/')) {
+      alert('Please select an image file');
+      return;
+    }
+
+    // Check file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      alert('Image must be less than 5MB');
+      return;
+    }
+
+    const setUploading = fieldName === 'logoUrl' ? setUploadingLogo : setUploadingBackground;
+    setUploading(true);
+
+    try {
+      // Convert to base64 data URL
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData(prev => ({ ...prev, [fieldName]: reader.result }));
+        setUploading(false);
+      };
+      reader.onerror = () => {
+        alert('Failed to read file');
+        setUploading(false);
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      alert('Failed to upload image');
+      setUploading(false);
+    }
   };
 
   const handleSubmit = async (e) => {
@@ -64,6 +116,13 @@ export default function Settings() {
   return (
     <div className="settings-page">
       <div className="settings-container">
+        <button
+          onClick={() => navigate('/dashboard')}
+          className="close-button"
+          aria-label="Close settings"
+        >
+          ✕
+        </button>
         <h1 className="settings-title">Restaurant Settings</h1>
         <p className="settings-subtitle">Customize your menu display branding</p>
 
@@ -105,29 +164,53 @@ export default function Settings() {
             <h2 className="section-title">Images</h2>
 
             <div className="form-group">
-              <label htmlFor="logoUrl">Logo URL</label>
-              <input
-                type="url"
-                id="logoUrl"
-                name="logoUrl"
-                value={formData.logoUrl}
-                onChange={handleChange}
-                placeholder="https://example.com/logo.png"
-              />
-              <small>Recommended: Square image, transparent background</small>
+              <label htmlFor="logoUrl">Logo</label>
+              <div className="image-upload-group">
+                <input
+                  type="url"
+                  id="logoUrl"
+                  name="logoUrl"
+                  value={formData.logoUrl}
+                  onChange={handleChange}
+                  placeholder="Enter image URL or upload file"
+                />
+                <label htmlFor="logoFile" className="upload-btn">
+                  {uploadingLogo ? 'Uploading...' : 'Upload File'}
+                </label>
+                <input
+                  type="file"
+                  id="logoFile"
+                  accept="image/*"
+                  onChange={(e) => handleFileUpload(e, 'logoUrl')}
+                  style={{ display: 'none' }}
+                />
+              </div>
+              <small>Recommended: Square image, transparent background (Max 5MB)</small>
             </div>
 
             <div className="form-group">
-              <label htmlFor="backgroundImageUrl">Background Image URL</label>
-              <input
-                type="url"
-                id="backgroundImageUrl"
-                name="backgroundImageUrl"
-                value={formData.backgroundImageUrl}
-                onChange={handleChange}
-                placeholder="https://example.com/background.jpg"
-              />
-              <small>Recommended: High-resolution, landscape orientation</small>
+              <label htmlFor="backgroundImageUrl">Background Image</label>
+              <div className="image-upload-group">
+                <input
+                  type="url"
+                  id="backgroundImageUrl"
+                  name="backgroundImageUrl"
+                  value={formData.backgroundImageUrl}
+                  onChange={handleChange}
+                  placeholder="Enter image URL or upload file"
+                />
+                <label htmlFor="backgroundFile" className="upload-btn">
+                  {uploadingBackground ? 'Uploading...' : 'Upload File'}
+                </label>
+                <input
+                  type="file"
+                  id="backgroundFile"
+                  accept="image/*"
+                  onChange={(e) => handleFileUpload(e, 'backgroundImageUrl')}
+                  style={{ display: 'none' }}
+                />
+              </div>
+              <small>Recommended: High-resolution, landscape orientation (Max 5MB)</small>
             </div>
           </section>
 
@@ -226,6 +309,13 @@ export default function Settings() {
 
           {/* Actions */}
           <div className="form-actions">
+            <button
+              type="button"
+              onClick={() => navigate('/dashboard')}
+              className="btn-cancel"
+            >
+              Cancel
+            </button>
             <button
               type="button"
               onClick={resetToDefaults}
