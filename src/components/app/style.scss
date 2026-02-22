@@ -32,6 +32,13 @@ a {
   text-decoration: none;
 }
 
+// Dashboard Container
+.dashboard-container {
+  padding-top: 120px; // Space for fixed header
+  min-height: 100vh;
+  background: linear-gradient(135deg, $charcoal 0%, darken($charcoal, 2%) 100%);
+}
+
 // header - Modern Glassmorphism Design
 .site-header header {
   display: flex;
@@ -96,6 +103,7 @@ a {
     border: 0;
     outline: 0;
     position: relative;
+    z-index: 101;
     padding: 10px;
     cursor: pointer;
     border-radius: 8px;
@@ -134,59 +142,81 @@ a {
       }
     }
   }
-  // sidebar navigation
-  .sidebarNavOverlay {
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto;
-    display: flex;
-    background-color: transparent;
-    z-index: 8;
-  }
-  
-  .menu-wrapper {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    margin: auto;
-    display: flex;
-    z-index: 9;
-    width: 300px;
-    right: 0;
-    overflow: hidden;
-  }
-  
-  .sidebar-top {
-    overflow: hidden;
-    display: flex;
-    height: 100%;;
-  }
-  
-  .links-wrapper {
-    overflow: hidden;
-    overflow-y: auto;
+}
+
+// Sidebar Overlay & Navigation
+.sidebar-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 40;
+}
+
+.sidebar-panel {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  width: 320px;
+  background: linear-gradient(180deg, $slate 0%, darken($slate, 3%) 100%);
+  border-left: 1px solid rgba($gold-light, 0.15);
+  box-shadow: -10px 0 50px rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-nav {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 3rem 2rem;
+
+  .nav-links {
     display: flex;
     flex-direction: column;
-    flex-basis: 100%;
-    flex-shrink: 0;
-    
-    .menu-link {
-      padding: 16px;
-      display: flex;
-      color: #2e2e2e;
-      text-decoration: none;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      font-weight: 500;
-      background-color: #2e2e2e;
-      width: 280px;
+    gap: 1.5rem;
+
+    a, .logout-btn {
+      display: block;
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: $text-light;
+      letter-spacing: 0.5px;
+      transition: all 0.3s ease;
+      padding: 0.5rem 0;
+      border-bottom: 2px solid transparent;
+      background: none;
+      border: none;
+      text-align: left;
+      cursor: pointer;
+      font-family: 'Inter', sans-serif;
+      width: 100%;
+
       &:hover {
-        background-color: darken(#2e2e2e, 10%);
+        color: $gold-light;
+        transform: translateX(8px);
+        border-bottom-color: $gold-light;
       }
     }
   }
-}
-  
 
-  
+  .nav-footer {
+    padding-top: 2rem;
+    border-top: 1px solid rgba($gold-light, 0.2);
+    color: $text-muted;
+    font-size: 0.875rem;
+    letter-spacing: 0.5px;
+  }
+}
+
+@media (max-width: 768px) {
+  .sidebar-panel {
+    width: 280px;
+  }
+}

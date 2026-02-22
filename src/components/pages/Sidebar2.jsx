@@ -2,7 +2,7 @@ import { useSpring, animated } from '@react-spring/web';
 import React, { useRef } from 'react';
 import NavContent from './NavContent';
 
-const Sidebar2 = ({ show }) => {
+const Sidebar2 = ({ show, setMenuState }) => {
   const navButton = useRef();
   const { right } = useSpring({
     from: { right: "-100%" },
@@ -18,19 +18,20 @@ const Sidebar2 = ({ show }) => {
 
   return (
     <>
-      {/* Backdrop */}
+      {/* Backdrop - Click to close */}
       <animated.div
         style={backdropAnimation}
-        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40"
+        className="sidebar-backdrop"
+        onClick={() => setMenuState(false)}
       />
 
       {/* Sidebar */}
       <animated.div
         style={{ right }}
         ref={navButton}
-        className="fixed top-0 bottom-0 w-80 bg-dark-darker border-l border-gray-900 shadow-2xl z-50"
+        className="sidebar-panel"
       >
-        <NavContent />
+        <NavContent setMenuState={setMenuState} />
       </animated.div>
     </>
   );

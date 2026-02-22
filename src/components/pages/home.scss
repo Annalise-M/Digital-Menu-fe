@@ -159,11 +159,14 @@ $text-muted: #98989D;
   overflow: hidden;
   border: 1px solid rgba($gold-light, 0.1);
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
 
   // Unavailable/sold-out state
   &.unavailable {
-    opacity: 0.6;
-    filter: grayscale(50%);
+    opacity: 0.85;
+    filter: grayscale(30%);
 
     .menu-item-name,
     .menu-item-detail,
@@ -211,6 +214,9 @@ $text-muted: #98989D;
   .card-content {
     position: relative;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
   }
 
   .menu-item-name {
@@ -246,7 +252,7 @@ $text-muted: #98989D;
   }
 
   .sold-out-badge {
-    margin-top: 1rem;
+    margin-top: auto;
     padding: 0.5rem 1rem;
     background: rgba(220, 53, 69, 0.2);
     border: 2px solid #dc3545;
@@ -256,13 +262,17 @@ $text-muted: #98989D;
     font-size: 0.9rem;
     letter-spacing: 1px;
     text-align: center;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
 // Beer Grid
 .beer-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 2rem;
   padding: 0 1rem;
 }
@@ -277,11 +287,14 @@ $text-muted: #98989D;
   border: 1px solid rgba($gold-light, 0.15);
   overflow: hidden;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  height: 320px;
+  display: flex;
+  flex-direction: column;
 
   // Unavailable/sold-out state
   &.unavailable {
-    opacity: 0.6;
-    filter: grayscale(50%);
+    opacity: 0.85;
+    filter: grayscale(30%);
 
     .beer-brewery,
     .beer-style,
@@ -321,6 +334,10 @@ $text-muted: #98989D;
   .beer-card-inner {
     position: relative;
     z-index: 2;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 0.5rem;
   }
 
   .beer-icon {
@@ -349,6 +366,7 @@ $text-muted: #98989D;
     justify-content: space-between;
     align-items: center;
     padding-top: 1.2rem;
+    padding-bottom: 1rem;
     border-top: 1px solid rgba($gold-light, 0.2);
 
     .beer-abv {
@@ -376,6 +394,7 @@ $text-muted: #98989D;
     font-weight: 700;
     font-size: 0.9rem;
     letter-spacing: 1px;
+    text-align: center;
   }
 }
 

@@ -5,13 +5,11 @@ const HtmlPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
-const env = Object.entries({
-  ...require('dotenv').config(),
-  ...process.env,
-}).reduce((acc, [key, value]) => {
-  acc[key] = value;
-  return acc;
-}, {});
+// Load .env file into process.env
+require('dotenv').config();
+
+// Use process.env directly
+const env = process.env;
 
 // eslint-disable-next-line
 module.exports = {
