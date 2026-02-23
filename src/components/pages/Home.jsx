@@ -16,9 +16,28 @@ export default function Home() {
   const loading = menusLoading || beersLoading || settingsLoading;
 
   // Extract settings with defaults
-  const restaurantName = settings?.restaurantName || 'The Traveling Taphouse';
+  const restaurantName = settings?.restaurantName || 'Your Restaurant Here';
   const tagline = settings?.tagline || 'Craft Beers & Culinary Excellence';
   const backgroundImage = settings?.backgroundImageUrl;
+
+  // Dummy data for empty database
+  const dummyMenus = [
+    { id: 'demo-1', item: 'Classic Burger', detail: 'Juicy beef patty with lettuce, tomato, and our special sauce', price: 12.95, available: true },
+    { id: 'demo-2', item: 'Caesar Salad', detail: 'Crisp romaine with house-made dressing and parmesan', price: 8.95, available: true },
+    { id: 'demo-3', item: 'Margherita Pizza', detail: 'Fresh mozzarella, basil, and tomato on our hand-tossed dough', price: 14.95, available: true },
+    { id: 'demo-4', item: 'Fish & Chips', detail: 'Beer-battered cod with crispy fries and tartar sauce', price: 15.95, available: true }
+  ];
+
+  const dummyBeers = [
+    { id: 'demo-b1', brewery: 'Local IPA', style: 'IPA', abv: 6.5, price: 7, available: true },
+    { id: 'demo-b2', brewery: 'Amber Ale', style: 'Ale', abv: 5.2, price: 6, available: true },
+    { id: 'demo-b3', brewery: 'Wheat Beer', style: 'Wheat', abv: 4.8, price: 6, available: true },
+    { id: 'demo-b4', brewery: 'Stout', style: 'Stout', abv: 7.0, price: 7.5, available: true }
+  ];
+
+  // Use dummy data if database is empty
+  const displayMenus = menus.length > 0 ? menus : dummyMenus;
+  const displayBeers = beers.length > 0 ? beers : dummyBeers;
 
   const heroRef = useRef(null);
   const menuSectionRef = useRef(null);
@@ -125,7 +144,7 @@ export default function Home() {
         </div>
 
         <div className="menu-grid">
-          {menus.map((menu) => (
+          {displayMenus.map((menu) => (
             <div key={menu.id} className={`menu-card ${!menu.available ? 'unavailable' : ''}`}>
               <div className="card-accent"></div>
               <div className="card-content">
@@ -152,7 +171,7 @@ export default function Home() {
         </div>
 
         <div className="beer-grid">
-          {beers.map((beer) => (
+          {displayBeers.map((beer) => (
             <div key={beer.id} className={`beer-card ${!beer.available ? 'unavailable' : ''}`}>
               <div className="beer-card-inner">
                 <div className="beer-icon">🍺</div>
