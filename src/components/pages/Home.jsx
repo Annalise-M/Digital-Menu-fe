@@ -9,13 +9,9 @@ import './home.scss';
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
-  // Enable real-time polling every 10 seconds for public display
-  const { data: menus = [], isLoading: menusLoading } = useMenus({
-    refetchInterval: 10000, // Poll every 10 seconds
-  });
-  const { data: beers = [], isLoading: beersLoading } = useBeers({
-    refetchInterval: 10000, // Poll every 10 seconds
-  });
+  // Fetch data once on mount (users can refresh if they want updates)
+  const { data: menus = [], isLoading: menusLoading } = useMenus();
+  const { data: beers = [], isLoading: beersLoading } = useBeers();
   const { data: settings, isLoading: settingsLoading } = useSettings();
   const loading = menusLoading || beersLoading || settingsLoading;
 
@@ -86,7 +82,12 @@ export default function Home() {
       y: 150,
       opacity: 0.3
     });
-  }, [loading, menus, beers]);
+
+    // Cleanup ScrollTrigger instances on unmount
+    return () => {
+      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+    };
+  }, [loading]); // Only re-run when loading changes (once on mount)
 
   const formatPrice = (price) => {
     return typeof price === 'number' ? price.toFixed(2) : parseFloat(price).toFixed(2);
