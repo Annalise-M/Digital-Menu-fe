@@ -9,6 +9,8 @@ import Login from '../auth/Login';
 import Signup from '../auth/Signup';
 import PrivateRoute from '../auth/PrivateRoute';
 import AuthProvider from '../auth/AuthProvider';
+import { useSettings } from '../../hooks/useSettings';
+import { ThemeProvider } from '../../context/ThemeContext';
 
 // Create a client
 const queryClient = new QueryClient({
@@ -20,36 +22,56 @@ const queryClient = new QueryClient({
   },
 });
 
+// Inner component that applies theme colors
+const ThemedApp = ({ menuState, setMenuState }) => {
+  const { data: settings } = useSettings();
+
+  // Apply CSS custom properties for dynamic theming
+  const themeStyles = {
+    '--primary-color': settings?.primaryColor || '#D4AF37',
+    '--accent-color': settings?.accentColor || '#B87333',
+    '--background-color': settings?.backgroundColor || '#1C1C1E',
+  };
+
+  return (
+    <ThemeProvider>
+      <div style={themeStyles}>
+        <Router>
+          <AuthProvider>
+            <Header menuState={menuState} setMenuState={setMenuState} />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <PrivateRoute>
+                    <Dashboard />
+                  </PrivateRoute>
+                }
+              />
+              <Route
+                path="/settings"
+                element={
+                  <PrivateRoute>
+                    <Settings />
+                  </PrivateRoute>
+                }
+              />
+            </Routes>
+          </AuthProvider>
+        </Router>
+      </div>
+    </ThemeProvider>
+  );
+};
+
 const App3 = () => {
   const [menuState, setMenuState] = useState(false);
   return (
     <QueryClientProvider client={queryClient}>
-      <Router>
-        <AuthProvider>
-          <Header menuState={menuState} setMenuState={setMenuState} />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route
-              path="/dashboard"
-              element={
-                <PrivateRoute>
-                  <Dashboard />
-                </PrivateRoute>
-              }
-            />
-            <Route
-              path="/settings"
-              element={
-                <PrivateRoute>
-                  <Settings />
-                </PrivateRoute>
-              }
-            />
-          </Routes>
-        </AuthProvider>
-      </Router>
+      <ThemedApp menuState={menuState} setMenuState={setMenuState} />
     </QueryClientProvider>
   );
 };

@@ -1,26 +1,26 @@
 .form-field {
   margin-bottom: 1rem;
-  
+
   label {
     display: block;
     margin-bottom: 0.5rem;
-    color: whitesmoke;
+    color: var(--text-primary, whitesmoke);
     font-weight: 500;
   }
 
   input {
     width: 100%;
     padding: 0.75rem;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid var(--border-color, rgba(255, 255, 255, 0.2));
     border-radius: 4px;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: whitesmoke;
+    background-color: var(--input-bg, rgba(255, 255, 255, 0.1));
+    color: var(--text-primary, whitesmoke);
     transition: all 0.2s ease;
 
     &:focus {
       outline: none;
-      border-color: rgba(255, 255, 255, 0.4);
-      background-color: rgba(255, 255, 255, 0.15);
+      border-color: var(--primary-color, rgba(255, 255, 255, 0.4));
+      background-color: var(--bg-tertiary, rgba(255, 255, 255, 0.15));
     }
 
     &.error {
@@ -28,7 +28,7 @@
     }
 
     &::placeholder {
-      color: rgba(255, 255, 255, 0.5);
+      color: var(--text-muted, rgba(255, 255, 255, 0.5));
     }
   }
 

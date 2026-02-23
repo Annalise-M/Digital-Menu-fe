@@ -8,9 +8,6 @@ const CopyPlugin = require('copy-webpack-plugin');
 // Load .env file into process.env
 require('dotenv').config();
 
-// Use process.env directly
-const env = process.env;
-
 // eslint-disable-next-line
 module.exports = {
   entry: './src/index.js',
@@ -26,7 +23,10 @@ module.exports = {
   plugins: [
     new HtmlPlugin({ template: './src/index.html' }),
     new CleanWebpackPlugin(),
-    new webpack.EnvironmentPlugin(env),
+    new webpack.DefinePlugin({
+      'process.env.API_URL': JSON.stringify(process.env.API_URL || 'http://localhost:7890'),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    }),
     new CopyPlugin({
       patterns: [{ from: 'public' }],
     }),

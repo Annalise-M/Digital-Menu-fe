@@ -5,6 +5,15 @@ $slate: #2C2C2E;
 $text-light: #E5E5E7;
 $text-muted: #98989D;
 
+// Override with CSS custom properties for dynamic theming
+.settings-title {
+  color: var(--primary-color, $gold-light) !important;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary-color, $gold-light) 0%, var(--primary-color, $gold) 100%) !important;
+}
+
 .settings-page {
   min-height: 100vh;
   background: linear-gradient(135deg, $charcoal 0%, darken($charcoal, 2%) 100%);

@@ -110,7 +110,7 @@ export default function Home() {
         style={backgroundImage ? { backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url(${backgroundImage})` } : {}}
       >
         <div className="hero-content">
-          <h1 className="hero-title">Welcome to {restaurantName}</h1>
+          <h1 className="hero-title">{restaurantName}</h1>
           <p className="hero-subtitle">{tagline}</p>
           <div className="hero-divider"></div>
         </div>

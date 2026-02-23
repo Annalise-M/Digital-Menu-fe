@@ -114,8 +114,8 @@ export default function Settings() {
   }
 
   return (
-    <div className="settings-page">
-      <div className="settings-container">
+    <div className="settings-page" onClick={() => navigate('/dashboard')}>
+      <div className="settings-container" onClick={(e) => e.stopPropagation()}>
         <button
           onClick={() => navigate('/dashboard')}
           className="close-button"

@@ -10,10 +10,35 @@ $cream: #F5F1E8;
 $text-light: #E5E5E7;
 $text-muted: #98989D;
 
+// Override these with CSS custom properties for dynamic theming
+// These will be set by the Settings component
+.hero-title {
+  background: linear-gradient(135deg, var(--primary-color, $gold-light) 0%, var(--accent-color, $copper) 100%) !important;
+  -webkit-background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  background-clip: text !important;
+}
+
+.section-title,
+.menu-item-price,
+.beer-price {
+  color: var(--primary-color, $gold-light) !important;
+}
+
+.hero-divider,
+.title-underline {
+  background: linear-gradient(90deg, transparent, var(--primary-color, $gold-light), var(--accent-color, $copper), var(--primary-color, $gold-light), transparent) !important;
+}
+
+.card-accent {
+  background: linear-gradient(90deg, var(--primary-color, $gold-light), var(--accent-color, $copper)) !important;
+}
+
 .home {
   min-height: 100vh;
-  background: linear-gradient(135deg, $charcoal 0%, darken($charcoal, 2%) 50%, $charcoal 100%);
-  color: $text-light;
+  background: var(--bg-primary, $charcoal);
+  color: var(--text-primary, $text-light);
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 // Loading State
@@ -152,13 +177,13 @@ $text-muted: #98989D;
 
 .menu-card {
   position: relative;
-  background: linear-gradient(145deg, $slate 0%, darken($slate, 3%) 100%);
+  background: var(--card-bg, linear-gradient(145deg, $slate 0%, darken($slate, 3%) 100%));
   border-radius: 16px;
   padding: 2.5rem;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   overflow: hidden;
-  border: 1px solid rgba($gold-light, 0.1);
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--border-color, rgba($gold-light, 0.1));
+  box-shadow: 0 4px 20px var(--shadow-color, rgba(0, 0, 0, 0.3));
   min-height: 240px;
   display: flex;
   flex-direction: column;
@@ -222,14 +247,14 @@ $text-muted: #98989D;
   .menu-item-name {
     font-size: 1.5rem;
     font-weight: 700;
-    color: $text-light;
+    color: var(--text-primary, $text-light);
     margin-bottom: 0.8rem;
     letter-spacing: 1px;
   }
 
   .menu-item-detail {
     font-size: 0.95rem;
-    color: $text-muted;
+    color: var(--text-secondary, $text-muted);
     line-height: 1.6;
     margin-bottom: 1.5rem;
   }
@@ -279,14 +304,14 @@ $text-muted: #98989D;
 
 .beer-card {
   position: relative;
-  background: linear-gradient(145deg, $slate 0%, darken($slate, 5%) 100%);
+  background: var(--card-bg, linear-gradient(145deg, $slate 0%, darken($slate, 5%) 100%));
   border-radius: 20px;
   padding: 2.5rem 2rem;
   text-align: center;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-  border: 1px solid rgba($gold-light, 0.15);
+  border: 1px solid var(--border-color, rgba($gold-light, 0.15));
   overflow: hidden;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 20px var(--shadow-color, rgba(0, 0, 0, 0.3));
   height: 320px;
   display: flex;
   flex-direction: column;
@@ -349,14 +374,14 @@ $text-muted: #98989D;
   .beer-brewery {
     font-size: 1.3rem;
     font-weight: 700;
-    color: $text-light;
+    color: var(--text-primary, $text-light);
     margin-bottom: 0.5rem;
     letter-spacing: 0.5px;
   }
 
   .beer-style {
     font-size: 1rem;
-    color: $text-muted;
+    color: var(--text-secondary, $text-muted);
     margin-bottom: 1.5rem;
     font-style: italic;
   }
@@ -371,7 +396,7 @@ $text-muted: #98989D;
 
     .beer-abv {
       font-size: 0.9rem;
-      color: $text-muted;
+      color: var(--text-secondary, $text-muted);
       font-weight: 600;
       letter-spacing: 0.5px;
     }
@@ -402,10 +427,10 @@ $text-muted: #98989D;
 .home-footer {
   text-align: center;
   padding: 3rem 2rem;
-  background: darken($charcoal, 3%);
-  color: $text-muted;
+  background: var(--bg-secondary, darken($charcoal, 3%));
+  color: var(--text-secondary, $text-muted);
   font-size: 0.9rem;
-  border-top: 1px solid rgba($gold-light, 0.1);
+  border-top: 1px solid var(--border-color, rgba($gold-light, 0.1));
 
   p {
     font-weight: 400;

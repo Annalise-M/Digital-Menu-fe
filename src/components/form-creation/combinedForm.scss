@@ -8,18 +8,18 @@
   display: flex;
   gap: 1rem;
   margin-bottom: 1.5rem;
-  background-color: #2C2C2E;
+  background-color: var(--bg-secondary, #2C2C2E);
   padding: 0.75rem;
   border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 12px var(--shadow-color, rgba(0, 0, 0, 0.3));
 
   .toggle-btn {
     flex: 1;
     padding: 1rem;
-    border: 2px solid rgba(212, 175, 55, 0.2);
+    border: 2px solid var(--border-color, rgba(212, 175, 55, 0.2));
     border-radius: 8px;
     background-color: transparent;
-    color: #E5E5E7;
+    color: var(--text-primary, #E5E5E7);
     font-size: 1rem;
     font-weight: 600;
     letter-spacing: 0.5px;
@@ -42,12 +42,12 @@
 }
 
 .combined-form {
-  background-color: rgba(23, 23, 22, 0.326);
+  background-color: var(--bg-secondary, rgba(23, 23, 22, 0.326));
   padding: 2rem;
   border-radius: 8px;
 
   h2 {
-    color: whitesmoke;
+    color: var(--text-primary, whitesmoke);
     margin-bottom: 1.5rem;
     text-align: center;
     font-size: 1.5rem;
