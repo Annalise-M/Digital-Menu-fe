@@ -99,7 +99,7 @@ export default function Settings() {
 
   const resetToDefaults = () => {
     setFormData({
-      restaurantName: 'The Traveling Taphouse',
+      restaurantName: 'Your Restaurant Here',
       tagline: 'Craft Beers & Culinary Excellence',
       logoUrl: '',
       backgroundImageUrl: '',
@@ -141,7 +141,7 @@ export default function Settings() {
                 onChange={handleChange}
                 required
                 maxLength="255"
-                placeholder="e.g., The Traveling Taphouse"
+                placeholder="e.g., Your Restaurant Name"
               />
             </div>
 

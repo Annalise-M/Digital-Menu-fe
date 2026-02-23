@@ -12,7 +12,7 @@ import Sidebar2 from './Sidebar2';
 const Header = ({ menuState, setMenuState }) => {
   const { data: settings } = useSettings();
   const { theme, toggleTheme } = useTheme();
-  const restaurantName = settings?.restaurantName || 'The Traveling Taphouse';
+  const restaurantName = settings?.restaurantName || 'Your Restaurant Here';
 
   return (
     <div className="site-header">
