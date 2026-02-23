@@ -11,6 +11,7 @@
   --shadow-color: rgba(0, 0, 0, 0.3);
   --card-bg: linear-gradient(145deg, #2C2C2E 0%, #262628 100%);
   --input-bg: rgba(28, 28, 30, 0.5);
+  --sidebar-bg: #0F0F10;
 }
 
 :root[data-theme="light"] {
@@ -25,6 +26,7 @@
   --shadow-color: rgba(0, 0, 0, 0.15);
   --card-bg: linear-gradient(145deg, #FFFFFF 0%, #F9F9FA 100%);
   --input-bg: #FFFFFF;
+  --sidebar-bg: #E8E8EA;
 }
 
 // Theme toggle button styles
