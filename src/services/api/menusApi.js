@@ -1,6 +1,3 @@
-// const fetch = require('node-fetch');
-import fetch from 'node-fetch';
-
 export const postMenu = async(menu) => {
   // const token = useAuthLoading('TOKEN');
   const res = await fetch(`${process.env.API_URL}/api/v1/menus`, {
@@ -10,8 +7,6 @@ export const postMenu = async(menu) => {
     },
     body: JSON.stringify(menu)
   });
-  
-  console.log(menu, 'sblfliuensflisnleifwnslsef');
 
   const json = await res.json();
   if(!res.ok) throw json;

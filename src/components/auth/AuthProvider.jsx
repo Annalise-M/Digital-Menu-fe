@@ -1,33 +1,56 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
 import { getVerify, postLogin, postSignup } from '../../services/auth/auth';
 
 const AuthProvider = ({ children }) => {
   const [currentAdmin, setCurrentAdmin] = useState(null);
   const [loading, setLoading] = useState(true);
-  const history = useHistory();
+  const navigate = useNavigate();
 
   // backend call on creating admin
   const signup = (email, password) => {
-    postSignup(email, password)
-      .then(admin => setCurrentAdmin(admin))
-      .then(() => history.push('/dashboard'))
+    return postSignup(email, password)
+      .then(admin => {
+        setCurrentAdmin(admin);
+        navigate('/dashboard');
+        return admin;
+      })
+      .catch(error => {
+        console.error('Signup failed:', error);
+        throw error; // Re-throw to allow component to catch it
+      })
       .finally(() => setLoading(false));
   };
 
   // logging in admin
   const login = (email, password) => {
-    postLogin(email, password)
-      .then(admin => setCurrentAdmin(admin))
-      .then(() => history.push('/dashboard'))
+    return postLogin(email, password)
+      .then(admin => {
+        setCurrentAdmin(admin);
+        navigate('/dashboard');
+        return admin;
+      })
+      .catch(error => {
+        console.error('Login failed:', error);
+        throw error; // Re-throw to allow component to catch it
+      })
       .finally(() => setLoading(false));
+  };
+
+  // logout admin
+  const logout = () => {
+    setCurrentAdmin(null);
+    navigate('/');
   };
 
   // verifies session cookie and sets current admin
   useEffect(() => {
     getVerify()
       .then(admin => setCurrentAdmin(admin))
+      .catch(() => {
+        // User not authenticated, leave currentAdmin as null
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -35,7 +58,8 @@ const AuthProvider = ({ children }) => {
     currentAdmin,
     loading,
     signup,
-    login
+    login,
+    logout
   };
 
   return (

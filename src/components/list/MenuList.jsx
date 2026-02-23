@@ -1,67 +1,62 @@
-import React, { useEffect, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchMenus, removeMenu } from '../../actions/menuActions';
-import { selectMenus } from '../../selectors/menuSelectors';
-import gsap from "gsap";
-// import { CSSPlugin } from 'gsap/CSSPlugin';
-// import { Draggable } from "gsap/Draggable";
-// gsap.registerPlugin(CSSPlugin, Draggable);
-
-
+import React from 'react';
+import { useMenus, useDeleteMenu, useUpdateMenu } from '../../hooks/useMenus';
+import DraggableGrid from './DraggableGrid';
 
 const MenuList = () => {
-  const menus = useSelector(selectMenus);
-  const dispatch = useDispatch();
-  // const container = React.createRef();
-  // const menuElements = useRef([]);
-
-
-  useEffect(() => {
-    dispatch(fetchMenus());
-  }, []);
-
-  // // animated effect
-  // useEffect(() => {
-  //   Draggable.create('.draggable', {
-  //     type: "x, y",
-  //     onPress: function() {
-  //       console.log("clicked");
-  //     }
-  //   });
-  // }, [])
+  const { data: menus = [], isLoading, error } = useMenus();
+  const deleteMenu = useDeleteMenu();
+  const updateMenu = useUpdateMenu();
 
   const handleDelete = ({ target }) => {
-    dispatch(removeMenu(target.value));
+    deleteMenu.mutate(target.value);
+  };
+
+  const handleToggleAvailability = (menu) => {
+    updateMenu.mutate({
+      id: menu.id,
+      item: menu.item,
+      detail: menu.detail,
+      price: menu.price,
+      available: !menu.available
+    });
+  };
+
+  const formatPrice = (price) => {
+    const numPrice = parseFloat(price);
+    return isNaN(numPrice) ? '0.00' : numPrice.toFixed(2);
   };
 
   const menuElements = menus.map(menu => (
-    <div key={menu.id} id="drag" className='draggable'>
-      {/* <div> */}
-        <p>{menu.item}</p>
-        <p>{menu.detail}</p>
-        <p>{menu.price}</p>
-        <button value={menu.id} onClick={handleDelete}>🗑️</button>
-      {/* </div> */}
+    <div key={menu.id} className="grid-item">
+      <div className="content-wrapper">
+        <div className="toggle-wrapper">
+          <input
+            type="checkbox"
+            className="toggle-button"
+            id={`strike-${menu.id}`}
+            checked={!menu.available}
+            onChange={() => handleToggleAvailability(menu)}
+          />
+          <label htmlFor={`strike-${menu.id}`}>Sold Out</label>
+        </div>
+        <p className={!menu.available ? 'strike-through' : ''}>{menu.item}</p>
+        <p className={!menu.available ? 'strike-through' : ''}>{menu.detail}</p>
+        <p className={!menu.available ? 'strike-through' : ''}>${formatPrice(menu.price)}</p>
+      </div>
+      <button value={menu.id} onClick={handleDelete}>🗑️</button>
     </div>
-  ),
-);
+  ));
+
+  if (isLoading) return <div className="menu-list-container"><h2>Loading menus...</h2></div>;
+  if (error) return <div className="menu-list-container"><h2>Error loading menus: {error.message}</h2></div>;
 
   return (
-        <div data-testid="menus" className="draggable">
-          {menuElements}
-          {/* {menus.map((menu) => {
-            const getRef = (el) => (menuElements.current.push(el))
-            return (
-            <div key={menu.id} ref={getRef} id="drag" className='draggable'>
-            <p>{menu.item}</p>
-            <p>{menu.detail}</p>
-            <p>{menu.price}</p>
-            <button value={menu.id} onClick={handleDelete}>🗑️</button>
-          </div> */}
-          {/* )})} */}
-{/*         
-      {console.log(menu.id, menu.ref, 'balifnlisenlsien')} */}
-      </div>
+    <div data-testid="menus" className="menu-list-container">
+      <h2>Menu Items</h2>
+      <DraggableGrid>
+        {menuElements}
+      </DraggableGrid>
+    </div>
   );
 };
 

@@ -1,38 +1,39 @@
 import React from 'react';
-import { 
-  Route, 
-  Switch,  
-  Link,
-} from 'react-router-dom';
-import Home from '../pages/Home';
-import Signup from '../auth/Signup';
-import AuthProvider from '../auth/AuthProvider';
-import Login from '../auth/Login';
-import Dashboard from '../pages/Dashboard';
-import PrivateRoute from '../auth/PrivateRoute';
+import { Link } from 'react-router-dom';
+import { useCurrentAdmin, useLogout } from '../../context/AuthContext';
 
-const NavContent = () => (
-  <div className="">
-    <nav className="sidebarNavOverlay">
-      <div className="sidebar-top">
-        <div className="links-wrapper">
-          <Link to="/">Home</Link>
-          <Link to="/Signup">Signup</Link>
-          <Link to="/Login">Login</Link>
-        <Switch>
-          <AuthProvider>
-            <Route exact path="/" component={Home} />
-            <Route exact path="/signup" component={Signup} />
-            <Route exact path="/login" component={Login} />
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
-          </AuthProvider>
-        </Switch>
-          
-        </div>
+const NavContent = ({ setMenuState }) => {
+  const currentAdmin = useCurrentAdmin();
+  const logout = useLogout();
+
+  const handleLogout = () => {
+    logout();
+    setMenuState(false);
+  };
+
+  return (
+    <nav className="sidebar-nav">
+      <div className="nav-links">
+        <Link to="/" onClick={() => setMenuState(false)}>Home</Link>
+
+        {!currentAdmin ? (
+          <>
+            <Link to="/signup" onClick={() => setMenuState(false)}>Signup</Link>
+            <Link to="/login" onClick={() => setMenuState(false)}>Login</Link>
+          </>
+        ) : (
+          <>
+            <Link to="/dashboard" onClick={() => setMenuState(false)}>Dashboard</Link>
+            <Link to="/settings" onClick={() => setMenuState(false)}>Settings</Link>
+            <button onClick={handleLogout} className="logout-btn">Logout</button>
+          </>
+        )}
       </div>
-      <div className="sidebar-bottom"></div>
+      <div className="nav-footer">
+        <p>&copy; 2026 Taphouse</p>
+      </div>
     </nav>
-  </div>
-);
+  );
+};
 
 export default NavContent; 

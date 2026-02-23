@@ -1,0 +1,222 @@
+$gold-light: #D4AF37;
+$gold: #B8860B;
+$charcoal: #1C1C1E;
+$slate: #2C2C2E;
+$text-light: #E5E5E7;
+
+// Override with CSS custom properties for dynamic theming
+.beer-list-container h2,
+.menu-list-container h2 {
+  color: var(--primary-color, $gold-light) !important;
+
+  &::after {
+    background: linear-gradient(90deg, transparent, var(--primary-color, $gold-light), var(--primary-color, $gold), var(--primary-color, $gold-light), transparent) !important;
+  }
+}
+
+.grid-item p:nth-child(3) {
+  color: var(--primary-color, $gold-light) !important;
+}
+
+.beer-list-container,
+.menu-list-container {
+  margin: 2rem 0;
+  padding: 0 1rem;
+
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    color: $gold-light;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    position: relative;
+    padding-bottom: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 120px;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, $gold-light, $gold, $gold-light, transparent);
+      border-radius: 2px;
+    }
+  }
+}
+
+.draggable-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+  width: 100%;
+  min-height: 200px;
+  background: linear-gradient(145deg, rgba($charcoal, 0.6) 0%, rgba($charcoal, 0.7) 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba($gold-light, 0.1);
+}
+
+.grid-item {
+  background: linear-gradient(145deg, $slate 0%, darken($slate, 3%) 100%);
+  border-radius: 12px;
+  padding: 1.75rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  cursor: move;
+  user-select: none;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  border: 1px solid rgba($gold-light, 0.15);
+  position: relative;
+  overflow: hidden;
+
+  &:hover {
+    box-shadow: 0 8px 25px rgba($gold-light, 0.2);
+    transform: translateY(-4px);
+    border-color: rgba($gold-light, 0.4);
+  }
+
+  .content-wrapper {
+    position: relative;
+    padding-right: 3rem;
+  }
+
+  .strike-through {
+    text-decoration: line-through;
+    opacity: 0.6;
+  }
+
+  .toggle-wrapper {
+    position: absolute;
+    top: 0.5rem;
+    right: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 2;
+
+    label {
+      font-size: 0.85rem;
+      color: var(--text-secondary, rgba($text-light, 0.8));
+      cursor: pointer;
+      user-select: none;
+      font-weight: 500;
+    }
+
+    .toggle-button {
+      appearance: none;
+      width: 44px;
+      height: 22px;
+      background-color: var(--bg-tertiary, rgba($text-light, 0.2));
+      border-radius: 22px;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: 2px solid var(--border-color, rgba($text-light, 0.3));
+      outline: none;
+
+      &:checked {
+        background-color: #dc3545;
+        border-color: #dc3545;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background-color: var(--text-primary, white);
+        top: 2px;
+        left: 2px;
+        transition: all 0.3s ease;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      &:checked::after {
+        left: 22px;
+        background-color: white;
+      }
+
+      &:hover {
+        opacity: 0.9;
+        border-color: var(--text-secondary, rgba($text-light, 0.5));
+      }
+
+      &:active::after {
+        width: 20px;
+      }
+    }
+  }
+
+  p {
+    margin: 0.5rem 0;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-primary, $text-light);
+
+    &:first-child {
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--text-primary, $text-light);
+      margin-bottom: 0.75rem;
+      letter-spacing: 0.5px;
+    }
+
+    &:nth-child(2) {
+      font-size: 0.95rem;
+      color: var(--text-secondary, rgba($text-light, 0.75));
+      font-style: italic;
+      margin-bottom: 1rem;
+      line-height: 1.5;
+    }
+
+    &:nth-child(3) {
+      font-size: 1.25rem;
+      color: var(--primary-color, $gold-light);
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(var(--primary-color, $gold-light), 0.3);
+    }
+
+    &.abv {
+      font-size: 0.9rem;
+      color: var(--text-secondary, rgba($text-light, 0.65));
+      font-style: italic;
+      margin-top: 0.5rem;
+    }
+  }
+
+  button {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    margin: 0;
+    padding: 0.5rem;
+    border: none;
+    background: rgba($gold-light, 0.1);
+    border-radius: 6px;
+    cursor: pointer;
+    opacity: 0.6;
+    transition: all 0.2s ease;
+    font-size: 1.2rem;
+
+    &:hover {
+      opacity: 1;
+      background: rgba($gold-light, 0.2);
+      transform: scale(1.1);
+    }
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 4px;
+    height: 100%;
+    background: linear-gradient(180deg, $gold-light 0%, $gold 100%);
+    border-radius: 12px 0 0 12px;
+  }
+} 

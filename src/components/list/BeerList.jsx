@@ -1,46 +1,64 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchBeers, removeBeer } from '../../actions/beerActions';
-import { selectBeers } from '../../selectors/beerSelectors';
-// import { Draggable } from "gsap";
+import React from 'react';
+import { useBeers, useDeleteBeer, useUpdateBeer } from '../../hooks/useBeers';
+import DraggableGrid from './DraggableGrid';
 
 const BeerList = () => {
-  const beers = useSelector(selectBeers);
-  const dispatch = useDispatch();
-  const beerCard = React.createRef();
-  // const container = React.createRef();
-
-  useEffect(() => {
-    dispatch(fetchBeers());
-  }, []);
-
-  useEffect(() => {
-    Draggable.create('.draggable', {
-      type: "x, y",
-      onPress: function() {
-        console.log("clicked");
-      }
-    });
-  }, [])
+  const { data: beers = [], isLoading, error } = useBeers();
+  const deleteBeer = useDeleteBeer();
+  const updateBeer = useUpdateBeer();
 
   const handleDelete = ({ target }) => {
-    dispatch(removeBeer(target.value));
+    deleteBeer.mutate(target.value);
+  };
+
+  const handleToggleAvailability = (beer) => {
+    updateBeer.mutate({
+      id: beer.id,
+      brewery: beer.brewery,
+      style: beer.style,
+      abv: beer.abv,
+      price: beer.price,
+      available: !beer.available
+    });
+  };
+
+  const formatPrice = (price) => {
+    const numPrice = parseFloat(price);
+    return isNaN(numPrice) ? '0.00' : numPrice.toFixed(2);
   };
 
   const beerElements = beers.map(beer => (
-      <li key={beer.id} ref={beerCard} id="beerCard" className='draggable'>
-        <p>{beer.brewery}</p>
-        <p>{beer.style}</p>
-        <p>{beer.abv}</p>
-        <p>{beer.price}</p>
-        <button value={beer.id} onClick={handleDelete}>🗑️</button>
-      </li>
+    <div key={beer.id} className="grid-item">
+      <div className="content-wrapper">
+        <div className="toggle-wrapper">
+          <input
+            type="checkbox"
+            className="toggle-button"
+            id={`strike-${beer.id}`}
+            checked={!beer.available}
+            onChange={() => handleToggleAvailability(beer)}
+          />
+          <label htmlFor={`strike-${beer.id}`}>Sold Out</label>
+        </div>
+        <p className={!beer.available ? 'strike-through' : ''}>{beer.brewery}</p>
+        <p className={!beer.available ? 'strike-through' : ''}>{beer.style}</p>
+        <p className={!beer.available ? 'strike-through' : ''}>${formatPrice(beer.price)}</p>
+        <p className={`abv ${!beer.available ? 'strike-through' : ''}`}>{beer.abv}% ABV</p>
+      </div>
+      <button value={beer.id} onClick={handleDelete}>🗑️</button>
+    </div>
   ));
 
+  if (isLoading) return <div className="beer-list-container"><h2>Loading beers...</h2></div>;
+  if (error) return <div className="beer-list-container"><h2>Error loading beers: {error.message}</h2></div>;
+
   return (
-    <ul data-testid="beers" className='draggable'>
-      {beerElements}
-    </ul>
+    <div data-testid="beers" className="beer-list-container">
+      <h2>Beer Selection</h2>
+      <DraggableGrid>
+        {beerElements}
+      </DraggableGrid>
+    </div>
   );
 };
 

@@ -5,13 +5,8 @@ const HtmlPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const CopyPlugin = require('copy-webpack-plugin');
 
-const env = Object.entries({
-  ...require('dotenv').config(),
-  ...process.env,
-}).reduce((acc, [key, value]) => {
-  acc[key] = value;
-  return acc;
-}, {});
+// Load .env file into process.env
+require('dotenv').config();
 
 // eslint-disable-next-line
 module.exports = {
@@ -28,7 +23,10 @@ module.exports = {
   plugins: [
     new HtmlPlugin({ template: './src/index.html' }),
     new CleanWebpackPlugin(),
-    new webpack.EnvironmentPlugin(env),
+    new webpack.DefinePlugin({
+      'process.env.API_URL': JSON.stringify(process.env.API_URL || 'http://localhost:7890'),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+    }),
     new CopyPlugin({
       patterns: [{ from: 'public' }],
     }),
