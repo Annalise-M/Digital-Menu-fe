@@ -11,6 +11,7 @@ export default function Settings() {
   const [formData, setFormData] = useState({
     restaurantName: '',
     tagline: '',
+    uncategorizedLabel: 'Uncategorized',
     logoUrl: '',
     backgroundImageUrl: '',
     primaryColor: '#D4AF37',
@@ -25,6 +26,7 @@ export default function Settings() {
       setFormData({
         restaurantName: settings.restaurantName || '',
         tagline: settings.tagline || '',
+        uncategorizedLabel: settings.uncategorizedLabel || 'Uncategorized',
         logoUrl: settings.logoUrl || '',
         backgroundImageUrl: settings.backgroundImageUrl || '',
         primaryColor: settings.primaryColor || '#D4AF37',
@@ -101,6 +103,7 @@ export default function Settings() {
     setFormData({
       restaurantName: 'Your Restaurant Here',
       tagline: 'Craft Beers & Culinary Excellence',
+      uncategorizedLabel: 'Uncategorized',
       logoUrl: '',
       backgroundImageUrl: '',
       primaryColor: '#D4AF37',
@@ -156,6 +159,20 @@ export default function Settings() {
                 maxLength="255"
                 placeholder="e.g., Craft Beers & Culinary Excellence"
               />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="uncategorizedLabel">Uncategorized Label</label>
+              <input
+                type="text"
+                id="uncategorizedLabel"
+                name="uncategorizedLabel"
+                value={formData.uncategorizedLabel}
+                onChange={handleChange}
+                maxLength="50"
+                placeholder="e.g., Uncategorized, Specials, Featured"
+              />
+              <small>How uncategorized items appear on your menu (default: "Uncategorized")</small>
             </div>
           </section>
 

@@ -19,6 +19,7 @@ export default function Home() {
   const restaurantName = settings?.restaurantName || 'Your Restaurant Here';
   const tagline = settings?.tagline || 'Craft Beers & Culinary Excellence';
   const backgroundImage = settings?.backgroundImageUrl;
+  const uncategorizedLabel = settings?.uncategorizedLabel || 'Uncategorized';
 
   // Filter categories to only show those with available items
   const visibleMenuCategories = menusByCategory.filter(cat =>
@@ -171,7 +172,9 @@ export default function Home() {
 
         {visibleMenuCategories.map((category) => (
           <div key={category.category_id || category.category_name} className="menu-category-section">
-            <h3 className="category-title">{category.category_name}</h3>
+            <h3 className="category-title">
+              {category.category_name === 'Uncategorized' ? uncategorizedLabel : category.category_name}
+            </h3>
 
             <div className="menu-grid">
               {category.items.filter(item => item.available).map((menu) => (
@@ -203,7 +206,9 @@ export default function Home() {
 
         {visibleBeerCategories.map((category) => (
           <div key={category.category_id || category.category_name} className="beer-category-section">
-            <h3 className="category-title">{category.category_name}</h3>
+            <h3 className="category-title">
+              {category.category_name === 'Uncategorized' ? uncategorizedLabel : category.category_name}
+            </h3>
 
             <div className="beer-grid">
               {category.items.filter(item => item.available).map((beer) => (
