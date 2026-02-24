@@ -31,3 +31,17 @@ export const deleteBeer = async(id) => {
 
   return json;
 };
+
+export const bulkImportBeers = async(items) => {
+  const res = await fetch(`${process.env.API_URL}/api/v1/beers/bulk-import`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ items })
+  });
+
+  const json = await res.json();
+  if(!res.ok) throw json;
+  return json;
+};

@@ -32,3 +32,17 @@ export const deleteMenu = async(id) => {
 
   return json;
 };
+
+export const bulkImportMenus = async(items) => {
+  const res = await fetch(`${process.env.API_URL}/api/v1/menus/bulk-import`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({ items })
+  });
+
+  const json = await res.json();
+  if(!res.ok) throw json;
+  return json;
+};

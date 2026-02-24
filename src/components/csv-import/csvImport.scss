@@ -1,0 +1,340 @@
+// CSV Import Modal Styles
+.csv-import-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.csv-import-modal {
+  background: var(--background);
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  max-width: 1200px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.csv-import-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 30px;
+  border-bottom: 1px solid var(--border-color);
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    color: var(--text);
+  }
+
+  .close-button {
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: var(--text-secondary);
+    cursor: pointer;
+    padding: 0;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    transition: background 0.2s;
+
+    &:hover {
+      background: var(--hover-background);
+    }
+  }
+}
+
+.csv-import-body {
+  padding: 30px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+// Import Type Toggle
+.import-type-toggle {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 30px;
+
+  button {
+    flex: 1;
+    padding: 12px 24px;
+    border: 2px solid var(--border-color);
+    background: var(--background);
+    color: var(--text);
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: var(--hover-background);
+    }
+
+    &.active {
+      background: var(--primary);
+      color: white;
+      border-color: var(--primary);
+    }
+  }
+}
+
+// Instructions
+.import-instructions {
+  background: var(--card-background);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 30px;
+
+  h3 {
+    margin: 0 0 15px 0;
+    color: var(--text);
+    font-size: 18px;
+  }
+
+  ol {
+    margin: 0 0 20px 0;
+    padding-left: 20px;
+    color: var(--text-secondary);
+    line-height: 1.8;
+  }
+
+  .download-template-button {
+    width: 100%;
+    padding: 12px 24px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+}
+
+// File Upload
+.file-upload-section {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 30px;
+
+  .upload-button {
+    padding: 12px 24px;
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+    display: inline-block;
+
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  .file-name {
+    color: var(--text-secondary);
+    font-size: 14px;
+  }
+}
+
+// Import Summary
+.import-summary {
+  display: flex;
+  gap: 20px;
+  margin-bottom: 20px;
+  padding: 15px;
+  background: var(--card-background);
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+
+  span {
+    font-weight: 600;
+    font-size: 14px;
+  }
+
+  .valid-count {
+    color: #22c55e;
+  }
+
+  .warning-count {
+    color: #f59e0b;
+  }
+
+  .error-count {
+    color: #ef4444;
+  }
+}
+
+// Preview Table
+.csv-preview-table-container {
+  overflow-x: auto;
+  margin-bottom: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.csv-preview-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+
+  thead {
+    position: sticky;
+    top: 0;
+    background: var(--card-background);
+    z-index: 10;
+  }
+
+  th {
+    padding: 12px;
+    text-align: left;
+    font-weight: 600;
+    color: var(--text);
+    border-bottom: 2px solid var(--border-color);
+    white-space: nowrap;
+  }
+
+  td {
+    padding: 12px;
+    color: var(--text);
+    border-bottom: 1px solid var(--border-color);
+  }
+
+  .description-cell {
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .status-cell {
+    font-size: 13px;
+  }
+
+  // Row colors
+  .valid-row {
+    background: rgba(34, 197, 94, 0.05);
+
+    &:hover {
+      background: rgba(34, 197, 94, 0.1);
+    }
+  }
+
+  .warning-row {
+    background: rgba(245, 158, 11, 0.05);
+
+    &:hover {
+      background: rgba(245, 158, 11, 0.1);
+    }
+  }
+
+  .error-row {
+    background: rgba(239, 68, 68, 0.05);
+
+    &:hover {
+      background: rgba(239, 68, 68, 0.1);
+    }
+  }
+
+  .status-valid {
+    color: #22c55e;
+  }
+
+  .status-errors,
+  .status-warnings {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .error-message {
+    color: #ef4444;
+  }
+
+  .warning-message {
+    color: #f59e0b;
+  }
+}
+
+// Action Buttons
+.import-actions {
+  display: flex;
+  gap: 15px;
+  justify-content: flex-end;
+
+  button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+  }
+
+  .reset-button {
+    background: var(--card-background);
+    color: var(--text);
+    border: 1px solid var(--border-color);
+
+    &:hover:not(:disabled) {
+      background: var(--hover-background);
+    }
+  }
+
+  .import-button {
+    background: var(--primary);
+    color: white;
+
+    &:hover:not(:disabled) {
+      opacity: 0.9;
+    }
+  }
+}
+
+// Dark theme adjustments
+[data-theme='dark'] {
+  .csv-import-modal {
+    background: #1a1a1a;
+  }
+
+  .import-instructions,
+  .import-summary,
+  .csv-preview-table thead {
+    background: #2a2a2a;
+  }
+}

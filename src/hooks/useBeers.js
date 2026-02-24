@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getBeers, postBeer, deleteBeer } from '../services/api/beersApi';
+import { getBeers, postBeer, deleteBeer, bulkImportBeers } from '../services/api/beersApi';
 
 // Query key factory
 const beerKeys = {
@@ -55,6 +55,20 @@ export const useDeleteBeer = () => {
 
   return useMutation({
     mutationFn: deleteBeer,
+    onSuccess: () => {
+      // Invalidate both queries to refetch fresh data
+      queryClient.invalidateQueries({ queryKey: beerKeys.all });
+      queryClient.invalidateQueries({ queryKey: ['beerCategories', 'grouped'] });
+    },
+  });
+};
+
+// Bulk import beers
+export const useBulkImportBeers = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: bulkImportBeers,
     onSuccess: () => {
       // Invalidate both queries to refetch fresh data
       queryClient.invalidateQueries({ queryKey: beerKeys.all });

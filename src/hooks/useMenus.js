@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { getMenus, postMenu, deleteMenu } from '../services/api/menusApi';
+import { getMenus, postMenu, deleteMenu, bulkImportMenus } from '../services/api/menusApi';
 
 // Query key factory
 const menuKeys = {
@@ -55,6 +55,20 @@ export const useDeleteMenu = () => {
 
   return useMutation({
     mutationFn: deleteMenu,
+    onSuccess: () => {
+      // Invalidate both queries to refetch fresh data
+      queryClient.invalidateQueries({ queryKey: menuKeys.all });
+      queryClient.invalidateQueries({ queryKey: ['menuCategories', 'grouped'] });
+    },
+  });
+};
+
+// Bulk import menus
+export const useBulkImportMenus = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: bulkImportMenus,
     onSuccess: () => {
       // Invalidate both queries to refetch fresh data
       queryClient.invalidateQueries({ queryKey: menuKeys.all });
