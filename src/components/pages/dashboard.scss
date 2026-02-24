@@ -22,7 +22,7 @@
   .csv-import-button {
     padding: 14px 28px;
     background: var(--primary);
-    color: white;
+    color: #000;
     border: none;
     border-radius: 10px;
     font-size: 18px;
@@ -44,6 +44,15 @@
     &:active {
       transform: translateY(0);
       box-shadow: 0 2px 8px rgba(212, 175, 55, 0.3);
+    }
+  }
+}
+
+// Dark mode override for button text
+[data-theme='dark'] {
+  .dashboard-header {
+    .csv-import-button {
+      color: #fff;
     }
   }
 }
