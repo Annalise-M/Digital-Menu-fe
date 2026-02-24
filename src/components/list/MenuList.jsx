@@ -1,11 +1,20 @@
 import React from 'react';
 import { useMenus, useDeleteMenu, useUpdateMenu } from '../../hooks/useMenus';
+import { useMenuCategories } from '../../hooks/useMenuCategories';
 import DraggableGrid from './DraggableGrid';
 
 const MenuList = () => {
   const { data: menus = [], isLoading, error } = useMenus();
+  const { data: categories = [] } = useMenuCategories();
   const deleteMenu = useDeleteMenu();
   const updateMenu = useUpdateMenu();
+
+  // Helper function to get category name from ID
+  const getCategoryName = (categoryId) => {
+    if (!categoryId) return 'Uncategorized';
+    const category = categories.find(cat => cat.id === categoryId);
+    return category ? category.name : 'Uncategorized';
+  };
 
   const handleDelete = ({ target }) => {
     deleteMenu.mutate(target.value);
@@ -17,7 +26,8 @@ const MenuList = () => {
       item: menu.item,
       detail: menu.detail,
       price: menu.price,
-      available: !menu.available
+      available: !menu.available,
+      categoryId: menu.categoryId
     });
   };
 
@@ -42,6 +52,9 @@ const MenuList = () => {
         <p className={!menu.available ? 'strike-through' : ''}>{menu.item}</p>
         <p className={!menu.available ? 'strike-through' : ''}>{menu.detail}</p>
         <p className={!menu.available ? 'strike-through' : ''}>${formatPrice(menu.price)}</p>
+        <p className="category-label">
+          <span className="label-text">Category:</span> {getCategoryName(menu.categoryId)}
+        </p>
       </div>
       <button value={menu.id} onClick={handleDelete}>🗑️</button>
     </div>

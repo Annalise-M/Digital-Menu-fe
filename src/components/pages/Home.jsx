@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { useMenus } from '../../hooks/useMenus';
-import { useBeers } from '../../hooks/useBeers';
+import { useMenusGroupedByCategory } from '../../hooks/useMenuCategories';
+import { useBeersGroupedByCategory } from '../../hooks/useBeerCategories';
 import { useSettings } from '../../hooks/useSettings';
 import './home.scss';
 
@@ -10,8 +10,8 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function Home() {
   // Fetch data once on mount (users can refresh if they want updates)
-  const { data: menus = [], isLoading: menusLoading } = useMenus();
-  const { data: beers = [], isLoading: beersLoading } = useBeers();
+  const { data: menusByCategory = [], isLoading: menusLoading } = useMenusGroupedByCategory();
+  const { data: beersByCategory = [], isLoading: beersLoading } = useBeersGroupedByCategory();
   const { data: settings, isLoading: settingsLoading } = useSettings();
   const loading = menusLoading || beersLoading || settingsLoading;
 
@@ -20,24 +20,14 @@ export default function Home() {
   const tagline = settings?.tagline || 'Craft Beers & Culinary Excellence';
   const backgroundImage = settings?.backgroundImageUrl;
 
-  // Dummy data for empty database
-  const dummyMenus = [
-    { id: 'demo-1', item: 'Classic Burger', detail: 'Juicy beef patty with lettuce, tomato, and our special sauce', price: 12.95, available: true },
-    { id: 'demo-2', item: 'Caesar Salad', detail: 'Crisp romaine with house-made dressing and parmesan', price: 8.95, available: true },
-    { id: 'demo-3', item: 'Margherita Pizza', detail: 'Fresh mozzarella, basil, and tomato on our hand-tossed dough', price: 14.95, available: true },
-    { id: 'demo-4', item: 'Fish & Chips', detail: 'Beer-battered cod with crispy fries and tartar sauce', price: 15.95, available: true }
-  ];
+  // Filter categories to only show those with available items
+  const visibleMenuCategories = menusByCategory.filter(cat =>
+    cat.items && cat.items.some(item => item.available)
+  );
 
-  const dummyBeers = [
-    { id: 'demo-b1', brewery: 'Local IPA', style: 'IPA', abv: 6.5, price: 7, available: true },
-    { id: 'demo-b2', brewery: 'Amber Ale', style: 'Ale', abv: 5.2, price: 6, available: true },
-    { id: 'demo-b3', brewery: 'Wheat Beer', style: 'Wheat', abv: 4.8, price: 6, available: true },
-    { id: 'demo-b4', brewery: 'Stout', style: 'Stout', abv: 7.0, price: 7.5, available: true }
-  ];
-
-  // Use dummy data if database is empty
-  const displayMenus = menus.length > 0 ? menus : dummyMenus;
-  const displayBeers = beers.length > 0 ? beers : dummyBeers;
+  const visibleBeerCategories = beersByCategory.filter(cat =>
+    cat.items && cat.items.some(item => item.available)
+  );
 
   const heroRef = useRef(null);
   const menuSectionRef = useRef(null);
@@ -54,32 +44,32 @@ export default function Home() {
       ease: 'power3.out'
     });
 
-    // Menu items stagger animation - using set() first to ensure visibility
-    if (menus.length > 0) {
-      const menuCards = document.querySelectorAll('.menu-card');
-      gsap.set(menuCards, { opacity: 1, y: 0 }); // Ensure visible first
-      gsap.from(menuCards, {
-        scrollTrigger: {
-          trigger: menuSectionRef.current,
-          start: 'top 90%',
-          toggleActions: 'play none none none'
-        },
-        y: 30,
-        opacity: 0,
-        stagger: 0.1,
-        duration: 0.6,
-        ease: 'power2.out'
-      });
-    }
+    // Animate category titles and menu items
+    const categorySections = document.querySelectorAll('.menu-category-section');
+    categorySections.forEach((section) => {
+      const title = section.querySelector('.category-title');
+      const cards = section.querySelectorAll('.menu-card');
 
-    // Beer items stagger animation - using set() first to ensure visibility
-    if (beers.length > 0) {
-      const beerCards = document.querySelectorAll('.beer-card');
-      gsap.set(beerCards, { opacity: 1, scale: 1 }); // Ensure visible first
-      gsap.from(beerCards, {
+      // Set initial state to visible
+      gsap.set([title, ...cards], { opacity: 1, y: 0 });
+
+      // Animate on scroll
+      gsap.from(title, {
         scrollTrigger: {
-          trigger: beerSectionRef.current,
+          trigger: section,
           start: 'top 90%',
+          toggleActions: 'play none none none'
+        },
+        y: 20,
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power2.out'
+      });
+
+      gsap.from(cards, {
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 85%',
           toggleActions: 'play none none none'
         },
         y: 30,
@@ -88,7 +78,43 @@ export default function Home() {
         duration: 0.6,
         ease: 'power2.out'
       });
-    }
+    });
+
+    // Animate beer category sections
+    const beerCategorySections = document.querySelectorAll('.beer-category-section');
+    beerCategorySections.forEach((section) => {
+      const title = section.querySelector('.category-title');
+      const cards = section.querySelectorAll('.beer-card');
+
+      // Set initial state to visible
+      gsap.set([title, ...cards], { opacity: 1, y: 0 });
+
+      // Animate on scroll
+      gsap.from(title, {
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 90%',
+          toggleActions: 'play none none none'
+        },
+        y: 20,
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power2.out'
+      });
+
+      gsap.from(cards, {
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 85%',
+          toggleActions: 'play none none none'
+        },
+        y: 30,
+        opacity: 0,
+        stagger: 0.1,
+        duration: 0.6,
+        ease: 'power2.out'
+      });
+    });
 
     // Parallax effect on scroll
     gsap.to('.hero-title', {
@@ -143,49 +169,59 @@ export default function Home() {
           <div className="title-underline"></div>
         </div>
 
-        <div className="menu-grid">
-          {displayMenus.map((menu) => (
-            <div key={menu.id} className={`menu-card ${!menu.available ? 'unavailable' : ''}`}>
-              <div className="card-accent"></div>
-              <div className="card-content">
-                <h3 className="menu-item-name">{menu.item}</h3>
-                {menu.detail && (
-                  <p className="menu-item-detail">{menu.detail}</p>
-                )}
-                <div className="menu-item-price">
-                  <span className="price-label">$</span>
-                  <span className="price-value">{formatPrice(menu.price)}</span>
+        {visibleMenuCategories.map((category) => (
+          <div key={category.category_id || category.category_name} className="menu-category-section">
+            <h3 className="category-title">{category.category_name}</h3>
+
+            <div className="menu-grid">
+              {category.items.filter(item => item.available).map((menu) => (
+                <div key={menu.id} className="menu-card">
+                  <div className="card-accent"></div>
+                  <div className="card-content">
+                    <h4 className="menu-item-name">{menu.item}</h4>
+                    {menu.detail && (
+                      <p className="menu-item-detail">{menu.detail}</p>
+                    )}
+                    <div className="menu-item-price">
+                      <span className="price-label">$</span>
+                      <span className="price-value">{formatPrice(menu.price)}</span>
+                    </div>
+                  </div>
                 </div>
-                {!menu.available && <div className="sold-out-badge">SOLD OUT</div>}
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </section>
 
       {/* Beer Section */}
       <section ref={beerSectionRef} className="beer-section">
         <div className="section-header">
-          <h2 className="section-title">On Tap</h2>
+          <h2 className="section-title">Craft Beers</h2>
           <div className="title-underline"></div>
         </div>
 
-        <div className="beer-grid">
-          {displayBeers.map((beer) => (
-            <div key={beer.id} className={`beer-card ${!beer.available ? 'unavailable' : ''}`}>
-              <div className="beer-card-inner">
-                <div className="beer-icon">🍺</div>
-                <h3 className="beer-brewery">{beer.brewery}</h3>
-                <p className="beer-style">{beer.style}</p>
-                <div className="beer-details">
-                  <span className="beer-abv">{formatPrice(beer.abv)}% ABV</span>
-                  <span className="beer-price">${formatPrice(beer.price)}</span>
+        {visibleBeerCategories.map((category) => (
+          <div key={category.category_id || category.category_name} className="beer-category-section">
+            <h3 className="category-title">{category.category_name}</h3>
+
+            <div className="beer-grid">
+              {category.items.filter(item => item.available).map((beer) => (
+                <div key={beer.id} className="beer-card">
+                  <div className="beer-card-inner">
+                    <div className="beer-icon">🍺</div>
+                    <h4 className="beer-brewery">{beer.brewery}</h4>
+                    <p className="beer-style">{beer.style}</p>
+                    <div className="beer-details">
+                      <span className="beer-abv">{formatPrice(beer.abv)}% ABV</span>
+                      <span className="beer-price">${formatPrice(beer.price)}</span>
+                    </div>
+                  </div>
                 </div>
-                {!beer.available && <div className="sold-out-badge">SOLD OUT</div>}
-              </div>
+              ))}
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </section>
 
       {/* Footer */}

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { useCreateBeer } from '../../hooks/useBeers';
 import { useCreateMenu } from '../../hooks/useMenus';
+import { useMenuCategories } from '../../hooks/useMenuCategories';
+import { useBeerCategories } from '../../hooks/useBeerCategories';
 import FormField from './FormField';
 import './combinedForm.scss';
 
@@ -15,7 +17,8 @@ const CombinedForm = () => {
     item: '',
     detail: '',
     // Shared fields
-    price: ''
+    price: '',
+    categoryId: ''
   });
 
   const [errors, setErrors] = useState({});
@@ -23,6 +26,10 @@ const CombinedForm = () => {
 
   const createBeer = useCreateBeer();
   const createMenu = useCreateMenu();
+
+  // Fetch categories
+  const { data: menuCategories = [] } = useMenuCategories();
+  const { data: beerCategories = [] } = useBeerCategories();
 
   const validateForm = () => {
     const newErrors = {};
@@ -91,12 +98,14 @@ const CombinedForm = () => {
           brewery: formData.brewery,
           style: formData.style,
           abv: parseFloat(formData.abv),
-          price: parseFloat(formData.price)
+          price: parseFloat(formData.price),
+          categoryId: formData.categoryId ? parseInt(formData.categoryId) : null
         }
       : {
           item: formData.item,
           detail: formData.detail,
-          price: parseFloat(formData.price)
+          price: parseFloat(formData.price),
+          categoryId: formData.categoryId ? parseInt(formData.categoryId) : null
         };
 
     mutation.mutate(data, {
@@ -105,8 +114,8 @@ const CombinedForm = () => {
         setFormData(prev => ({
           ...prev,
           ...(formType === 'beer'
-            ? { brewery: '', style: '', abv: '', price: '' }
-            : { item: '', detail: '', price: '' }
+            ? { brewery: '', style: '', abv: '', price: '', categoryId: '' }
+            : { item: '', detail: '', price: '', categoryId: '' }
           )
         }));
         setSubmitSuccess(true);
@@ -220,6 +229,21 @@ const CombinedForm = () => {
           required
           placeholder="Enter price"
         />
+
+        <FormField
+          id={`${formType}-category`}
+          label="Category"
+          name="categoryId"
+          as="select"
+          value={formData.categoryId}
+          onChange={handleChange}
+          error={errors.categoryId}
+        >
+          <option value="">Select a category (optional)</option>
+          {(formType === 'beer' ? beerCategories : menuCategories).map(cat => (
+            <option key={cat.id} value={cat.id}>{cat.name}</option>
+          ))}
+        </FormField>
 
         {errors.submit && (
           <div className="error-message">{errors.submit}</div>

@@ -22,11 +22,10 @@ export const useCreateMenu = () => {
 
   return useMutation({
     mutationFn: postMenu,
-    onSuccess: (newMenu) => {
-      // Optimistically update the cache
-      queryClient.setQueryData(menuKeys.all, (oldMenus) => {
-        return oldMenus ? [newMenu, ...oldMenus] : [newMenu];
-      });
+    onSuccess: () => {
+      // Invalidate both queries to refetch fresh data
+      queryClient.invalidateQueries({ queryKey: menuKeys.all });
+      queryClient.invalidateQueries({ queryKey: ['menuCategories', 'grouped'] });
     },
   });
 };
@@ -42,13 +41,10 @@ export const useUpdateMenu = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updates)
       }).then(res => res.json()),
-    onSuccess: (updatedMenu) => {
-      // Update the cache
-      queryClient.setQueryData(menuKeys.all, (oldMenus) => {
-        return oldMenus ? oldMenus.map(menu =>
-          menu.id === updatedMenu.id ? updatedMenu : menu
-        ) : [updatedMenu];
-      });
+    onSuccess: () => {
+      // Invalidate both queries to refetch fresh data
+      queryClient.invalidateQueries({ queryKey: menuKeys.all });
+      queryClient.invalidateQueries({ queryKey: ['menuCategories', 'grouped'] });
     },
   });
 };
@@ -59,11 +55,10 @@ export const useDeleteMenu = () => {
 
   return useMutation({
     mutationFn: deleteMenu,
-    onSuccess: (deletedMenu) => {
-      // Remove from cache
-      queryClient.setQueryData(menuKeys.all, (oldMenus) => {
-        return oldMenus ? oldMenus.filter(menu => menu.id !== deletedMenu.id) : [];
-      });
+    onSuccess: () => {
+      // Invalidate both queries to refetch fresh data
+      queryClient.invalidateQueries({ queryKey: menuKeys.all });
+      queryClient.invalidateQueries({ queryKey: ['menuCategories', 'grouped'] });
     },
   });
 };

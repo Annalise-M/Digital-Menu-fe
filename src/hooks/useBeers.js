@@ -22,11 +22,10 @@ export const useCreateBeer = () => {
 
   return useMutation({
     mutationFn: postBeer,
-    onSuccess: (newBeer) => {
-      // Optimistically update the cache
-      queryClient.setQueryData(beerKeys.all, (oldBeers) => {
-        return oldBeers ? [newBeer, ...oldBeers] : [newBeer];
-      });
+    onSuccess: () => {
+      // Invalidate both queries to refetch fresh data
+      queryClient.invalidateQueries({ queryKey: beerKeys.all });
+      queryClient.invalidateQueries({ queryKey: ['beerCategories', 'grouped'] });
     },
   });
 };
@@ -42,13 +41,10 @@ export const useUpdateBeer = () => {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(updates)
       }).then(res => res.json()),
-    onSuccess: (updatedBeer) => {
-      // Update the cache
-      queryClient.setQueryData(beerKeys.all, (oldBeers) => {
-        return oldBeers ? oldBeers.map(beer =>
-          beer.id === updatedBeer.id ? updatedBeer : beer
-        ) : [updatedBeer];
-      });
+    onSuccess: () => {
+      // Invalidate both queries to refetch fresh data
+      queryClient.invalidateQueries({ queryKey: beerKeys.all });
+      queryClient.invalidateQueries({ queryKey: ['beerCategories', 'grouped'] });
     },
   });
 };
@@ -59,11 +55,10 @@ export const useDeleteBeer = () => {
 
   return useMutation({
     mutationFn: deleteBeer,
-    onSuccess: (deletedBeer) => {
-      // Remove from cache
-      queryClient.setQueryData(beerKeys.all, (oldBeers) => {
-        return oldBeers ? oldBeers.filter(beer => beer.id !== deletedBeer.id) : [];
-      });
+    onSuccess: () => {
+      // Invalidate both queries to refetch fresh data
+      queryClient.invalidateQueries({ queryKey: beerKeys.all });
+      queryClient.invalidateQueries({ queryKey: ['beerCategories', 'grouped'] });
     },
   });
 };

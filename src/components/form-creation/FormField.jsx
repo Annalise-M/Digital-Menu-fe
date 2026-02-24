@@ -5,26 +5,32 @@ const FormField = ({
   id,
   label,
   type = 'text',
+  as = 'input',
   value,
   onChange,
   error,
   required = false,
   placeholder = '',
-  name
+  name,
+  children
 }) => {
+  const Component = as;
+
   return (
     <div className="form-field">
       <label htmlFor={id}>{label}</label>
-      <input
+      <Component
         id={id}
         name={name}
-        type={type}
+        type={as === 'input' ? type : undefined}
         value={value}
         onChange={onChange}
         required={required}
-        placeholder={placeholder}
+        placeholder={as === 'input' ? placeholder : undefined}
         className={error ? 'error' : ''}
-      />
+      >
+        {children}
+      </Component>
       {error && <span className="error-message">{error}</span>}
     </div>
   );

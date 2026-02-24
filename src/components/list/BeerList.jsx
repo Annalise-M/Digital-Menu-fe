@@ -1,11 +1,20 @@
 import React from 'react';
 import { useBeers, useDeleteBeer, useUpdateBeer } from '../../hooks/useBeers';
+import { useBeerCategories } from '../../hooks/useBeerCategories';
 import DraggableGrid from './DraggableGrid';
 
 const BeerList = () => {
   const { data: beers = [], isLoading, error } = useBeers();
+  const { data: categories = [] } = useBeerCategories();
   const deleteBeer = useDeleteBeer();
   const updateBeer = useUpdateBeer();
+
+  // Helper function to get category name from ID
+  const getCategoryName = (categoryId) => {
+    if (!categoryId) return 'Uncategorized';
+    const category = categories.find(cat => cat.id === categoryId);
+    return category ? category.name : 'Uncategorized';
+  };
 
   const handleDelete = ({ target }) => {
     deleteBeer.mutate(target.value);
@@ -18,7 +27,8 @@ const BeerList = () => {
       style: beer.style,
       abv: beer.abv,
       price: beer.price,
-      available: !beer.available
+      available: !beer.available,
+      categoryId: beer.categoryId
     });
   };
 
@@ -44,6 +54,9 @@ const BeerList = () => {
         <p className={!beer.available ? 'strike-through' : ''}>{beer.style}</p>
         <p className={!beer.available ? 'strike-through' : ''}>${formatPrice(beer.price)}</p>
         <p className={`abv ${!beer.available ? 'strike-through' : ''}`}>{beer.abv}% ABV</p>
+        <p className="category-label">
+          <span className="label-text">Category:</span> {getCategoryName(beer.categoryId)}
+        </p>
       </div>
       <button value={beer.id} onClick={handleDelete}>🗑️</button>
     </div>
