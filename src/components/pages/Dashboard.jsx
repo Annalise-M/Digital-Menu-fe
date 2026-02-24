@@ -17,7 +17,8 @@ export default function Dashboard() {
           onClick={() => setShowImportModal(true)}
           title="Import items from CSV file"
         >
-          📥 Import CSV
+          <span style={{ fontSize: '22px' }}>📥</span>
+          <span>Import CSV</span>
         </button>
       </div>
 

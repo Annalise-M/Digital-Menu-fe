@@ -1,5 +1,9 @@
 const request = async(path, method, body) => {
-  const res = await fetch(`${process.env.API_URL}${path}`, {
+  const url = `${process.env.API_URL}${path}`;
+  console.log('🔍 DEBUG - Fetching URL:', url);
+  console.log('🔍 DEBUG - API_URL:', process.env.API_URL);
+
+  const res = await fetch(url, {
     method,
     headers: ['POST', 'PUT', 'PATCH'].includes(method)
     ? { 'Content-Type': 'application/json' }
