@@ -31,6 +31,7 @@ const ThemedApp = ({ menuState, setMenuState }) => {
     '--primary-color': settings?.primaryColor || '#D4AF37',
     '--accent-color': settings?.accentColor || '#B87333',
     '--background-color': settings?.backgroundColor || '#1C1C1E',
+    '--primary-font': settings?.primaryFont || 'Inter, system-ui, sans-serif',
   };
 
   return (

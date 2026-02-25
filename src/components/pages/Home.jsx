@@ -19,7 +19,7 @@ export default function Home() {
   const restaurantName = settings?.restaurantName || 'Your Restaurant Here';
   const tagline = settings?.tagline || 'Craft Beers & Culinary Excellence';
   const backgroundImage = settings?.backgroundImageUrl;
-  const uncategorizedLabel = settings?.uncategorizedLabel || 'Uncategorized';
+  const uncategorizedLabel = settings?.uncategorizedLabel ?? 'Uncategorized';
 
   // Filter categories to only show those with available items
   const visibleMenuCategories = menusByCategory.filter(cat =>
@@ -51,21 +51,26 @@ export default function Home() {
       const title = section.querySelector('.category-title');
       const cards = section.querySelectorAll('.menu-card');
 
-      // Set initial state to visible
-      gsap.set([title, ...cards], { opacity: 1, y: 0 });
+      // Set initial state to visible (only if elements exist)
+      if (title) {
+        gsap.set(title, { opacity: 1, y: 0 });
+      }
+      gsap.set(cards, { opacity: 1, y: 0 });
 
-      // Animate on scroll
-      gsap.from(title, {
-        scrollTrigger: {
-          trigger: section,
-          start: 'top 90%',
-          toggleActions: 'play none none none'
-        },
-        y: 20,
-        opacity: 0,
-        duration: 0.5,
-        ease: 'power2.out'
-      });
+      // Animate on scroll (only if title exists)
+      if (title) {
+        gsap.from(title, {
+          scrollTrigger: {
+            trigger: section,
+            start: 'top 90%',
+            toggleActions: 'play none none none'
+          },
+          y: 20,
+          opacity: 0,
+          duration: 0.5,
+          ease: 'power2.out'
+        });
+      }
 
       gsap.from(cards, {
         scrollTrigger: {
@@ -87,12 +92,16 @@ export default function Home() {
       const title = section.querySelector('.category-title');
       const cards = section.querySelectorAll('.beer-card');
 
-      // Set initial state to visible
-      gsap.set([title, ...cards], { opacity: 1, y: 0 });
+      // Set initial state to visible (only if elements exist)
+      if (title) {
+        gsap.set(title, { opacity: 1, y: 0 });
+      }
+      gsap.set(cards, { opacity: 1, y: 0 });
 
-      // Animate on scroll
-      gsap.from(title, {
-        scrollTrigger: {
+      // Animate on scroll (only if title exists)
+      if (title) {
+        gsap.from(title, {
+          scrollTrigger: {
           trigger: section,
           start: 'top 90%',
           toggleActions: 'play none none none'
@@ -101,7 +110,8 @@ export default function Home() {
         opacity: 0,
         duration: 0.5,
         ease: 'power2.out'
-      });
+        });
+      }
 
       gsap.from(cards, {
         scrollTrigger: {
@@ -170,11 +180,15 @@ export default function Home() {
           <div className="title-underline"></div>
         </div>
 
-        {visibleMenuCategories.map((category) => (
+        {visibleMenuCategories.map((category) => {
+          const shouldShowTitle = category.category_name !== 'Uncategorized' || uncategorizedLabel;
+          return (
           <div key={category.category_id || category.category_name} className="menu-category-section">
-            <h3 className="category-title">
-              {category.category_name === 'Uncategorized' ? uncategorizedLabel : category.category_name}
-            </h3>
+            {shouldShowTitle && (
+              <h3 className="category-title">
+                {category.category_name === 'Uncategorized' ? uncategorizedLabel : category.category_name}
+              </h3>
+            )}
 
             <div className="menu-grid">
               {category.items.filter(item => item.available).map((menu) => (
@@ -194,7 +208,8 @@ export default function Home() {
               ))}
             </div>
           </div>
-        ))}
+          );
+        })}
       </section>
 
       {/* Beer Section */}
@@ -204,11 +219,16 @@ export default function Home() {
           <div className="title-underline"></div>
         </div>
 
-        {visibleBeerCategories.map((category) => (
+        {visibleBeerCategories.map((category) => {
+          const shouldShowTitle = category.category_name !== 'Uncategorized' || uncategorizedLabel;
+
+          return (
           <div key={category.category_id || category.category_name} className="beer-category-section">
-            <h3 className="category-title">
-              {category.category_name === 'Uncategorized' ? uncategorizedLabel : category.category_name}
-            </h3>
+            {shouldShowTitle && (
+              <h3 className="category-title">
+                {category.category_name === 'Uncategorized' ? uncategorizedLabel : category.category_name}
+              </h3>
+            )}
 
             <div className="beer-grid">
               {category.items.filter(item => item.available).map((beer) => (
@@ -226,7 +246,8 @@ export default function Home() {
               ))}
             </div>
           </div>
-        ))}
+          );
+        })}
       </section>
 
       {/* Footer */}

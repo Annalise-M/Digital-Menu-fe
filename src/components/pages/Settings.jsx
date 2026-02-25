@@ -17,6 +17,7 @@ export default function Settings() {
     primaryColor: '#D4AF37',
     accentColor: '#B87333',
     backgroundColor: '#1C1C1E',
+    primaryFont: 'Inter, system-ui, sans-serif',
   });
   const [uploadingLogo, setUploadingLogo] = useState(false);
   const [uploadingBackground, setUploadingBackground] = useState(false);
@@ -32,6 +33,7 @@ export default function Settings() {
         primaryColor: settings.primaryColor || '#D4AF37',
         accentColor: settings.accentColor || '#B87333',
         backgroundColor: settings.backgroundColor || '#1C1C1E',
+        primaryFont: settings.primaryFont || 'Inter, system-ui, sans-serif',
       });
     }
   }, [settings]);
@@ -109,6 +111,7 @@ export default function Settings() {
       primaryColor: '#D4AF37',
       accentColor: '#B87333',
       backgroundColor: '#1C1C1E',
+      primaryFont: 'Inter, system-ui, sans-serif',
     });
   };
 
@@ -304,6 +307,38 @@ export default function Settings() {
             </div>
           </section>
 
+          {/* Typography */}
+          <section className="form-section">
+            <h2 className="section-title">Typography</h2>
+
+            <div className="form-group">
+              <label htmlFor="primaryFont">Primary Font</label>
+              <select
+                id="primaryFont"
+                name="primaryFont"
+                value={formData.primaryFont}
+                onChange={handleChange}
+                className="font-select"
+              >
+                <option value="Inter, system-ui, sans-serif">Inter (Modern Sans-serif)</option>
+                <option value="'Playfair Display', serif">'Playfair Display' (Elegant Serif)</option>
+                <option value="'Merriweather', serif">Merriweather (Classic Serif)</option>
+                <option value="'Lora', serif">Lora (Refined Serif)</option>
+                <option value="'Open Sans', sans-serif">Open Sans (Clean Sans-serif)</option>
+                <option value="'Roboto', sans-serif">Roboto (Modern Sans-serif)</option>
+                <option value="'Montserrat', sans-serif">Montserrat (Geometric Sans-serif)</option>
+                <option value="'Poppins', sans-serif">Poppins (Rounded Sans-serif)</option>
+                <option value="'Raleway', sans-serif">Raleway (Elegant Sans-serif)</option>
+                <option value="'Oswald', sans-serif">Oswald (Bold Sans-serif)</option>
+                <option value="Georgia, serif">Georgia (Traditional Serif)</option>
+                <option value="'Times New Roman', serif">Times New Roman (Classic Serif)</option>
+                <option value="Arial, sans-serif">Arial (Web Safe)</option>
+                <option value="Verdana, sans-serif">Verdana (Web Safe)</option>
+              </select>
+              <small>Choose the font for your restaurant name and menu items</small>
+            </div>
+          </section>
+
           {/* Preview */}
           <section className="form-section">
             <h2 className="section-title">Preview</h2>
@@ -313,6 +348,7 @@ export default function Settings() {
                 '--primary': formData.primaryColor,
                 '--accent': formData.accentColor,
                 '--background': formData.backgroundColor,
+                fontFamily: formData.primaryFont,
               }}
             >
               <h3 style={{ color: formData.primaryColor }}>
@@ -321,6 +357,9 @@ export default function Settings() {
               <p style={{ color: formData.accentColor }}>
                 {formData.tagline || 'Your tagline here'}
               </p>
+              <small style={{ color: formData.accentColor, opacity: 0.7, fontStyle: 'italic' }}>
+                Font: {formData.primaryFont?.split(',')[0].replace(/['"]/g, '') || 'Inter'}
+              </small>
             </div>
           </section>
 
